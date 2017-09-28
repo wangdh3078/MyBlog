@@ -16,7 +16,7 @@ namespace MyBlog.Services
         public void Register(ContainerBuilder builder)
         {
             //注册数据库上下文
-            builder.Register(t => new MyBlogContext("MyBlog")).InstancePerLifetimeScope();
+            builder.Register(t => new MyBlogContext("MyBlogContext")).InstancePerLifetimeScope();
             //注册日志
             builder.RegisterType<Logger>().As<Logger>().InstancePerLifetimeScope();
             //注册仓储

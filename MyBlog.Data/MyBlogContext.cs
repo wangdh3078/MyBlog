@@ -20,7 +20,7 @@ namespace MyBlog.Data
         {
 
         }
-        public MyBlogContext(string nameOrConnectionString)
+        public MyBlogContext(string nameOrConnectionString= "MyBlogContext")
             : base(nameOrConnectionString)
         {
         } 

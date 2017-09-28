@@ -45,8 +45,8 @@ namespace MyBlog.Web.Controllers
                     Directory.CreateDirectory(localPath);
                 }
                 file.SaveAs(Path.Combine(localPath, filePathName));
-                string URL = HttpContext.Request.Url.Host+":"+ Request.Url.Port + "/FileUpload/" + filePathName;
-                return Json(new { success = 1, message = "上传成功", url = string.Empty });
+                string URL ="http://"+HttpContext.Request.Url.Host+":"+ Request.Url.Port + "/FileUpload/" + DateTime.Now.ToString("yyyy-MM-dd")+"/"+  filePathName;
+                return Json(new { success = 1, message = "上传成功", url = URL });
             }
             catch (Exception ex)
             {

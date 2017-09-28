@@ -15,7 +15,6 @@ namespace MyBlog.Data
 
         private IDbSet<T> _entities;
 
-
         #region 构造函数
         /// <summary>
         /// 构造函数
@@ -49,7 +48,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return null;
             }
         }
 
@@ -76,6 +76,7 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
+                _logger.Error(GetFullErrorText(ex));
                 return false;
             }
         }
@@ -98,7 +99,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
 
@@ -121,7 +123,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
 
@@ -143,8 +146,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
 
@@ -166,8 +169,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
 
@@ -185,8 +188,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-
-                throw ex;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
         #endregion
@@ -206,8 +209,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-
-                throw;
+                _logger.Error(GetFullErrorText(ex));
+                return null;
             }
         }
 
@@ -225,8 +228,8 @@ namespace MyBlog.Data
             }
             catch (DbEntityValidationException ex)
             {
-
-                throw;
+                _logger.Error(GetFullErrorText(ex));
+                return false;
             }
         }
         #endregion
@@ -319,5 +322,19 @@ namespace MyBlog.Data
             }
         }
         #endregion
+
+        /// <summary>
+        /// 获取完整错误
+        /// </summary>
+        /// <param name="exc">异常对象</param>
+        /// <returns></returns>
+        protected string GetFullErrorText(DbEntityValidationException exc)
+        {
+            var msg = string.Empty;
+            foreach (var validationErrors in exc.EntityValidationErrors)
+                foreach (var error in validationErrors.ValidationErrors)
+                    msg += string.Format("属性: {0} 错误信息: {1}", error.PropertyName, error.ErrorMessage) + Environment.NewLine;
+            return msg;
+        }
     }
 }
