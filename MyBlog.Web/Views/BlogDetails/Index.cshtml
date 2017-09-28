@@ -1,0 +1,652 @@
+﻿
+@{
+    ViewBag.Title = "博客详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12">
+        <div style="" id="mainContent">
+            <div class="forFlow">
+
+                <div id="post_detail">
+                    <!--done-->
+                    <div id="topics">
+                        <div class="post">
+                            <h1 class="postTitle">
+                                <a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/longxianghui/p/7561259.html">spring cloud+dotnet core搭建微服务架构：服务治理（一）</a>
+                            </h1>
+                            <div class="clear"></div>
+                            <div class="postBody">
+                                <div id="cnblogs_post_body" class="cnblogs-markdown">
+                                    <h1 id="背景">背景</h1>
+                                    <p>公司去年开始使用dotnet core开发项目。公司的总体架构采用的是微服务，那时候由于对微服务的理解并不是太深，加上各种组件的不成熟，只是把项目的各个功能通过业务层面拆分，然后通过nginx代理，项目最终上线。但是这远远没达到微服务的要求，其中服务治理，断路器都没有。我个人理解，我们谈微服务实际上更多的是谈服务治理这块东西，至于各个的服务只是微服务中的应用而已。一次偶然的机会发现了java的spring cloud这套框架，而且支持dotnet core集成（Steeltoe OSS）。所以目前我们的项目架构是spring cloud搭建底层微服务框架，dotnet core来编写业务逻辑。</p>
+                                    <h1 id="spring-cloud">spring cloud</h1>
+                                    <p>spring cloud是java平台提供的一套解决方案，目前市面上来说可能不是最好的微服务解决方案，但是一定是功能最齐全最全的解决方案。提供了一些微服务的基础功能，包括服务治理、负载均衡、断路器、配置中心、API网关等等。</p>
+                                    <h1 id="服务治理">服务治理</h1>
+                                    <p>关于服务治理这块东西，网上太多太多的资料和原理。相信大家也看了很多，但是如何应用到实际的项目场景，为什么要这样做呢？传统的项目，服务与服务之间的调用都是通过URL来访问，如果是集群那么通过一个负载均衡地址来访问，增加或者减少机器都是通过维护负载均衡列表的IP地址来实现。微服务架构下，分散成了N个服务，每个服务又是一个集群，对于一个大项目来说，维护这些配置是非常头疼的。笔者曾经在某知名互联网公司工作过，公司最累最背锅的就是运维团队，基本24小时都在应付各个团队的部署上线工作以及各种配置的维护，而且还经常出错挨骂。那么服务治理就出现在这种应用场景之中，运维工程师不用再维护各个负载均衡节点，由服务中心去统一处理。举个简单例子，一个电商网站，分解成N个服务，其中有一个用户服务，有一个订单服务，用户服务需要调用订单服务，而订单服务是一个集群，对于用户中心来说他只需要知道访问订单中心即可，至于具体访问订单中心的哪台机器由服务中心来调配。</p>
+                                    <h1 id="搭建服务治理平台">搭建服务治理平台</h1>
+                                    <ol>
+                                        <li>java开发环境和IDE使用请自行百度，笔者java开发的ide使用的intellij idea。</li>
+                                        <li>
+                                            <p>创建一个spring boot项目，项目名称service-center，添加spring cloud的依赖</p>
+<pre><code class="hljs django"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-eureka-server<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span></code></pre>
+                                        </li>
+                                        <li>
+                                            <p><a href="mailto:添加@EnableEurekaServer注解">添加@@EnableEurekaServer注解</a></p>
+<pre><code class="hljs groovy"><span class="hljs-meta">@@EnableEurekaServer</span>
+<span class="hljs-meta">@@SpringBootApplication</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServiceCenterApplication</span> {</span>}</code></pre>
+                                        </li>
+                                        <li>
+                                            <p>设置应用程序的端口和名称</p>
+<pre><code class="hljs fortran">spring.application.<span class="hljs-keyword">name</span>=service-center
+server.port=<span class="hljs-number">5000</span></code></pre>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                启动项目，在浏览器输入http://localhost:5000/<br>
+                                                <img src="http://images.cnblogs.com/cnblogs_com/longxianghui/1083293/o_eureka.png" alt="image">
+                                            </p>
+                                        </li>
+                                    </ol>
+                                    <h1 id="注册服务">注册服务</h1>
+                                    <ol>
+                                        <li>使用vs创建一个dotnet core web api程序</li>
+                                        <li>
+                                            <p>使用nuget添加Pivotal.Discovery.Client库</p>
+<pre><code class="hljs cmake">&lt;PackageReference <span class="hljs-keyword">Include</span>=<span class="hljs-string">"Pivotal.Discovery.Client"</span> Version=<span class="hljs-string">"1.1.0"</span> /&gt;</code></pre>
+                                            <p>3.Program.cs 设置一个端口</p>
+<pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)
+    </span>{
+                                            <span class="hljs-keyword">var</span> host = <span class="hljs-keyword">new</span> WebHostBuilder()
+            .UseKestrel()
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIISIntegration()
+            .UseStartup&lt;Startup&gt;()
+            .UseApplicationInsights()
+            .UseUrls(<span class="hljs-string">"http://*:8010"</span>)
+            .Build();
+
+        host.Run();
+    }</code></pre>
+                                        </li>
+                                        <li>
+                                            <p>Startup.cs</p>
+<pre><code class="hljs cpp"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span><span class="hljs-params">(IServiceCollection services)</span>
+    </span>{
+        services.AddDiscoveryClient(Configuration);
+                                            <span class="hljs-comment">// Add framework services.</span>
+        services.AddMvc();
+    }</code></pre>
+<pre><code class="hljs cpp">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span><span class="hljs-params">(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)</span>
+    </span>{
+        loggerFactory.AddConsole(Configuration.GetSection(<span class="hljs-string">"Logging"</span>));
+        loggerFactory.AddDebug();
+
+        app.UseMvc();
+        app.UseDiscoveryClient();
+    }</code></pre>
+                                        </li>
+                                        <li>
+                                            <p>appsettings.json</p>
+<pre><code class="hljs json">{
+"<span class="hljs-attr">Logging</span>": {
+    "<span class="hljs-attr">IncludeScopes</span>": <span class="hljs-literal">false</span>,
+    "<span class="hljs-attr">LogLevel</span>": {
+        "<span class="hljs-attr">Default</span>": <span class="hljs-string">"Warning"</span>
+    }
+},
+"<span class="hljs-attr">spring</span>": {
+    "<span class="hljs-attr">application</span>": {
+        "<span class="hljs-attr">name</span>": <span class="hljs-string">"serviceone"</span>
+    }
+},
+"<span class="hljs-attr">eureka</span>": {
+    "<span class="hljs-attr">client</span>": {
+        "<span class="hljs-attr">serviceUrl</span>": <span class="hljs-string">"http://loclhost:5000/eureka/"</span>,
+        "<span class="hljs-attr">shouldFetchRegistry</span>": <span class="hljs-literal">false</span>,
+        "<span class="hljs-attr">shouldRegisterWithEureka</span>": <span class="hljs-literal">true</span> 
+    },
+    "<span class="hljs-attr">instance</span>": {
+        "<span class="hljs-attr">port</span>": <span class="hljs-number">8010</span>
+    }
+}
+}</code></pre>
+                                            <blockquote>
+                                                <p>如果是团队开发，"shouldRegisterWithEureka"设置成false，防止本地环境注册到开发环境</p>
+                                            </blockquote>
+                                        </li>
+                                        <li>
+                                            启动程序，再次访问http://localhost:5000/发现已经注册到服务中心了<br>
+                                            <img src="http://images.cnblogs.com/cnblogs_com/longxianghui/1083293/o_eureka1.png" alt="image">
+                                        </li>
+                                        <li>
+                                            <p>同样的方式我们再创建一个ServiceTwo的项目，修改programe.cs和appsettings.json文件，其它不变</p>
+<pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)
+    </span>{
+                                            <span class="hljs-keyword">var</span> host = <span class="hljs-keyword">new</span> WebHostBuilder()
+            .UseKestrel()
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIISIntegration()
+            .UseStartup&lt;Startup&gt;()
+            .UseApplicationInsights()
+            .UseUrls(<span class="hljs-string">"http://*:8011"</span>)
+            .Build();
+
+        host.Run();</code></pre>
+<pre><code class="hljs json">{
+"<span class="hljs-attr">Logging</span>": {
+    "<span class="hljs-attr">IncludeScopes</span>": <span class="hljs-literal">false</span>,
+    "<span class="hljs-attr">LogLevel</span>": {
+        "<span class="hljs-attr">Default</span>": <span class="hljs-string">"Warning"</span>
+    }
+},
+"<span class="hljs-attr">spring</span>": {
+    "<span class="hljs-attr">application</span>": {
+        "<span class="hljs-attr">name</span>": <span class="hljs-string">"servicetwo"</span>
+    }
+},
+"<span class="hljs-attr">eureka</span>": {
+    "<span class="hljs-attr">client</span>": {
+        "<span class="hljs-attr">serviceUrl</span>": <span class="hljs-string">"http://loclhost:5000/eureka/"</span>,
+        "<span class="hljs-attr">shouldFetchRegistry</span>": <span class="hljs-literal">false</span>,
+        "<span class="hljs-attr">shouldRegisterWithEureka</span>": <span class="hljs-literal">true</span> 
+    },
+    "<span class="hljs-attr">instance</span>": {
+        "<span class="hljs-attr">port</span>": <span class="hljs-number">8011</span>
+    }
+}
+}</code></pre>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                再次访问http://localhost:5000/，发现ServiceOne和ServiceTwo都已经注册到服务中心了<br>
+                                                <img src="http://images.cnblogs.com/cnblogs_com/longxianghui/1083293/o_eureka2.png" alt="image">
+                                            </p>
+                                        </li>
+                                    </ol>
+                                    <h1 id="后记">后记</h1>
+                                    <p>
+                                        这样一个简单的服务治理平台就搭建出来了,我们通过spring cloud来创建了一个服务中心,然后通过dotnet core创建了2个服务注册到了服务中心,但是这些离微服务还差的远.服务之间怎么相互调用呢?集群模式怎么处理呢?微服务的统一API网关呢？留下这些问题，且听下回分解。<br>
+                                        第二篇文章已经发布。<a href="http://www.cnblogs.com/longxianghui/p/7576736.html">spring cloud+dotnet core搭建微服务架构：服务发现（二）</a>
+                                    </p>
+                                    <p>
+                                        所有代码均上传<a href="https://github.com/longxianghui/microservice">github</a>。<br>
+                                        求推荐，你们的支持是我写作最大的动力，我的QQ群：328438252,交流微服务。
+                                    </p>
+                                    <h1 id="参考资料">参考资料</h1>
+                                    <p>java部分</p>
+                                    <ul>
+                                        <li><a href="https://github.com/SpringCloud/spring-cloud-docs">spring cloud文档</a></li>
+                                        <li><a href="http://www.cnblogs.com/ityouknow/category/994104.html">纯洁大神spring cloud系列</a></li>
+                                    </ul>
+                                    <p>.net部分</p>
+                                    <ul>
+                                        <li><a href="http://steeltoe.io/docs/">SteeltoeOSS文档</a></li>
+                                        <li><a href="https://github.com/SteeltoeOSS/">SteeltoeOSS源码</a></li>
+                                    </ul>
+                                </div><div id="MySignature"></div>
+                                <div class="clear"></div>
+                                <div id="blog_post_info_block">
+                                    <div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/longxianghui/category/1083184.html" target="_blank">微服务</a></div>
+                                    <div id="EntryTag">标签: <a href="http://www.cnblogs.com/longxianghui/tag/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>, <a href="http://www.cnblogs.com/longxianghui/tag/.net%20core/">.net core</a>, <a href="http://www.cnblogs.com/longxianghui/tag/spring%20cloud/">spring cloud</a></div>
+                                    <div id="blog_post_info">
+                                        <div id="green_channel">
+                                            <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(7561259,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+                                            <a id="green_channel_follow" onclick="follow('a1045449-8961-df11-ba8f-001cf0cd104b');" href="javascript:void(0);">关注我</a>
+                                            <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+                                            <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="//common.cnblogs.com/images/icon_weibo_24.png" alt=""></a>
+                                            <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="//common.cnblogs.com/images/wechat.png" alt=""></a>
+                                        </div>
+                                        <div id="author_profile">
+                                            <div id="author_profile_info" class="author_profile_info">
+                                                <a href="http://home.cnblogs.com/u/longxianghui/" target="_blank"><img src="//pic.cnblogs.com/face/sample_face.gif" class="author_avatar" alt=""></a>
+                                                <div id="author_profile_detail" class="author_profile_info">
+                                                    <a href="http://home.cnblogs.com/u/longxianghui/">龙向辉</a><br>
+                                                    <a href="http://home.cnblogs.com/u/longxianghui/followees">关注 - 1</a><br>
+                                                    <a href="http://home.cnblogs.com/u/longxianghui/followers">粉丝 - 23</a>
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                            <div id="author_profile_honor"></div>
+                                            <div id="author_profile_follow">
+                                                <a href="javascript:void(0);" onclick="follow('a1045449-8961-df11-ba8f-001cf0cd104b');return false;">+加关注</a>
+                                            </div>
+                                        </div>
+                                        <div id="div_digg">
+                                            <div class="diggit" onclick="votePost(7561259,'Digg')">
+                                                <span class="diggnum" id="digg_count">36</span>
+                                            </div>
+                                            <div class="buryit" onclick="votePost(7561259,'Bury')">
+                                                <span class="burynum" id="bury_count">1</span>
+                                            </div>
+                                            <div class="clear"></div>
+                                            <div class="diggword" id="digg_tips">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div id="post_next_prev"><a href="http://www.cnblogs.com/longxianghui/archive/2010/05/26/1744212.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/longxianghui/archive/2010/05/26/1744212.html" title="发布于2010-05-26 10:37">史上最牛X到的身份证号码验证，测试误差为0</a><br><a href="http://www.cnblogs.com/longxianghui/p/7576736.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/longxianghui/p/7576736.html" title="发布于2017-09-22 19:36">spring cloud+dotnet core搭建微服务架构：服务发现（二）</a><br></div>
+                                </div>
+
+
+                            </div>
+                            <div class="postDesc">posted @@ <span id="post-date">2017-09-20 14:17</span> <a href="http://www.cnblogs.com/longxianghui/">龙向辉</a> 阅读(<span id="post_view_count">3084</span>) 评论(<span id="post_comment_count">28</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=7561259" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(7561259);return false;">收藏</a></div>
+                        </div>
+                        <script src="//common.cnblogs.com/highlight/9.1.0/highlight.min.js?id=20160127"></script>
+                        <script>markdown_highlight();</script>
+                        <script type="text/javascript">var allowComments=true,cb_blogId=70778,cb_entryId=7561259,cb_blogApp=currentBlogApp,cb_blogUserGuid='a1045449-8961-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2017/9/20 14:17:00';loadViewCount(cb_entryId);</script>
+
+                    </div><!--end: topics 文章、评论容器-->
+                </div><a name="!comments"></a><div id="blog-comments-placeholder">
+                    <div id="comments_pager_top"></div>
+                    <br>
+                    <div class="feedback_area_title">评论列表</div>
+                    <div class="feedbackNoItems"></div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3790943" class="layer">#1楼</a><a name="3790943" id="comment_anchor_3790943"></a>  <span class="comment_date">2017-09-20 14:47</span> <a id="a_comment_author_3790943" href="http://www.cnblogs.com/zengfanlin/" target="_blank">zengfanlin</a> <a href="http://msg.cnblogs.com/send/zengfanlin" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3790943" class="blog_comment_body">还可以这么混着用，好神奇</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3790943,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3790943,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3790956" class="layer">#2楼</a><a name="3790956" id="comment_anchor_3790956"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-20 14:56</span> <a id="a_comment_author_3790956" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3790956" class="blog_comment_body">
+                                <a href="#3790943" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3790943);">@@</a>
+                                zengfanlin<br>当然可以，都是http协议
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3790956,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3790956,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3790982" class="layer">#3楼</a><a name="3790982" id="comment_anchor_3790982"></a>  <span class="comment_date">2017-09-20 15:12</span> <a id="a_comment_author_3790982" href="http://www.cnblogs.com/chengxuzhimei/" target="_blank">程序之美~我爱上编程</a> <a href="http://msg.cnblogs.com/send/%E7%A8%8B%E5%BA%8F%E4%B9%8B%E7%BE%8E~%E6%88%91%E7%88%B1%E4%B8%8A%E7%BC%96%E7%A8%8B" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3790982" class="blog_comment_body">支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3790982,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3790982,'Bury',this)">反对(0)</a></div><span id="comment_3790982_avatar" style="display:none;">http://pic.cnblogs.com/face/744909/20160225161123.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3791004" class="layer">#4楼</a><a name="3791004" id="comment_anchor_3791004"></a>  <span class="comment_date">2017-09-20 15:30</span> <a id="a_comment_author_3791004" href="http://www.cnblogs.com/AllEmpty/" target="_blank">响马奔腾</a> <a href="http://msg.cnblogs.com/send/%E5%93%8D%E9%A9%AC%E5%A5%94%E8%85%BE" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3791004" class="blog_comment_body">支持，<a href="http://steeltoe.io/" target="_blank">http://steeltoe.io/</a></div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3791004,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3791004,'Bury',this)">反对(0)</a></div><span id="comment_3791004_avatar" style="display:none;">http://pic.cnblogs.com/face/760328/20151028145317.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3791006" class="layer">#5楼</a><a name="3791006" id="comment_anchor_3791006"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-20 15:32</span> <a id="a_comment_author_3791006" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3791006" class="blog_comment_body">
+                                <a href="#3791004" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3791004);">@@</a>
+                                响马奔腾<br>谢谢
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3791006,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3791006,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3791122" class="layer">#6楼</a><a name="3791122" id="comment_anchor_3791122"></a>  <span class="comment_date">2017-09-20 16:33</span> <a id="a_comment_author_3791122" href="http://home.cnblogs.com/u/1228739/" target="_blank">城围</a> <a href="http://msg.cnblogs.com/send/%E5%9F%8E%E5%9B%B4" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3791122" class="blog_comment_body">支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3791122,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3791122,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3791258" class="layer">#7楼</a><a name="3791258" id="comment_anchor_3791258"></a>  <span class="comment_date">2017-09-20 17:53</span> <a id="a_comment_author_3791258" href="http://www.cnblogs.com/huangzelin/" target="_blank">玻璃鱼儿</a> <a href="http://msg.cnblogs.com/send/%E7%8E%BB%E7%92%83%E9%B1%BC%E5%84%BF" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3791258" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3791258,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3791258,'Bury',this)">反对(0)</a></div><span id="comment_3791258_avatar" style="display:none;">http://pic.cnblogs.com/face/u219720.jpg?id=19161728</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3791801" class="layer">#8楼</a><a name="3791801" id="comment_anchor_3791801"></a>  <span class="comment_date">2017-09-21 10:14</span> <a id="a_comment_author_3791801" href="http://www.cnblogs.com/dacheng/" target="_blank">zhaodacheng</a> <a href="http://msg.cnblogs.com/send/zhaodacheng" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3791801" class="blog_comment_body">服务宕机了，服务治理平台会把服务去掉吗？如果能去掉是通过什么机制去掉的？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3791801,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3791801,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792353" class="layer">#9楼</a><a name="3792353" id="comment_anchor_3792353"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-21 16:33</span> <a id="a_comment_author_3792353" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792353" class="blog_comment_body">
+                                <a href="#3791801" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3791801);">@@</a>
+                                zhaodacheng<br>会去掉，设置服务治理的检测时间。
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792353,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792353,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792358" class="layer">#10楼</a><a name="3792358" id="comment_anchor_3792358"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-21 16:34</span> <a id="a_comment_author_3792358" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792358" class="blog_comment_body">
+                                <a href="#3791801" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3791801);">@@</a>
+                                zhaodacheng<br>我会在后面的章节里面模拟这种场景。谢谢提问。
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792358,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792358,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792582" class="layer">#11楼</a><a name="3792582" id="comment_anchor_3792582"></a>  <span class="comment_date">2017-09-21 18:38</span> <a id="a_comment_author_3792582" href="http://www.cnblogs.com/xuejianxiyang/" target="_blank">Ace001</a> <a href="http://msg.cnblogs.com/send/Ace001" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792582" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792582,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792582,'Bury',this)">反对(0)</a></div><span id="comment_3792582_avatar" style="display:none;">http://pic.cnblogs.com/face/814286/20151012143641.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792871" class="layer">#12楼</a><a name="3792871" id="comment_anchor_3792871"></a>  <span class="comment_date">2017-09-22 08:21</span> <a id="a_comment_author_3792871" href="http://www.cnblogs.com/jqwen/" target="_blank">jq.wen</a> <a href="http://msg.cnblogs.com/send/jq.wen" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792871" class="blog_comment_body">
+                                <a href="#3792353" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3792353);">@@</a>
+                                龙向辉<br>我记得Eureka的机制是，提供续约接口，由服务提供者定时续约。Eureka会定时剔除没有续约的服务，不会心跳访问提供者吧？还是我闹错了呢
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792871,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792871,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792879" class="layer">#13楼</a><a name="3792879" id="comment_anchor_3792879"></a>  <span class="comment_date">2017-09-22 08:35</span> <a id="a_comment_author_3792879" href="http://www.cnblogs.com/joeymary/" target="_blank">大兄弟竹子</a> <a href="http://msg.cnblogs.com/send/%E5%A4%A7%E5%85%84%E5%BC%9F%E7%AB%B9%E5%AD%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792879" class="blog_comment_body">公众号过来，特意来顶顶，微服务的干货。希望作者继续写下去。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792879,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792879,'Bury',this)">反对(0)</a></div><span id="comment_3792879_avatar" style="display:none;">http://pic.cnblogs.com/face/776708/20170421093149.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792890" class="layer">#14楼</a><a name="3792890" id="comment_anchor_3792890"></a>  <span class="comment_date">2017-09-22 08:51</span> <a id="a_comment_author_3792890" href="http://www.cnblogs.com/runningsmallguo/" target="_blank">菠萝吹雪—Code</a> <a href="http://msg.cnblogs.com/send/%E8%8F%A0%E8%90%9D%E5%90%B9%E9%9B%AA%E2%80%94Code" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792890" class="blog_comment_body">虽然对微服务这面不是太了解，但还是要支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792890,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792890,'Bury',this)">反对(0)</a></div><span id="comment_3792890_avatar" style="display:none;">http://pic.cnblogs.com/face/896449/20160222220422.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3792902" class="layer">#15楼</a><a name="3792902" id="comment_anchor_3792902"></a>  <span class="comment_date">2017-09-22 09:01</span> <a id="a_comment_author_3792902" href="http://www.cnblogs.com/longdexinoy/" target="_blank">longdexinoy</a> <a href="http://msg.cnblogs.com/send/longdexinoy" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3792902" class="blog_comment_body">同楼上，公众号过来，特意来顶顶，微服务的干货。希望作者继续写下去。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3792902,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3792902,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793062" class="layer">#16楼</a><a name="3793062" id="comment_anchor_3793062"></a>  <span class="comment_date">2017-09-22 10:38</span> <a id="a_comment_author_3793062" href="http://www.cnblogs.com/wangrudong003/" target="_blank">神牛步行3</a> <a href="http://msg.cnblogs.com/send/%E7%A5%9E%E7%89%9B%E6%AD%A5%E8%A1%8C3" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793062" class="blog_comment_body">很好，就是图片太模糊了<br>支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793062,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793062,'Bury',this)">反对(0)</a></div><span id="comment_3793062_avatar" style="display:none;">http://pic.cnblogs.com/face/348819/20130218153953.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793155" class="layer">#17楼</a><a name="3793155" id="comment_anchor_3793155"></a>  <span class="comment_date">2017-09-22 11:35</span> <a id="a_comment_author_3793155" href="http://www.cnblogs.com/xiazz/" target="_blank">ldlood</a> <a href="http://msg.cnblogs.com/send/ldlood" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793155" class="blog_comment_body">我觉得好乱啊 <br>都上了spring cloud  为啥不用spring boot  <br>个人愚见 <br>只用过spring boot还spring mvc</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793155,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793155,'Bury',this)">反对(0)</a></div><span id="comment_3793155_avatar" style="display:none;">http://pic.cnblogs.com/face/967854/20161122180546.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793156" class="layer">#18楼</a><a name="3793156" id="comment_anchor_3793156"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-22 11:37</span> <a id="a_comment_author_3793156" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793156" class="blog_comment_body">
+                                <a href="#3793155" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3793155);">@@</a>
+                                ldlood<br>文章的初衷就是.NET使用微服务，只是借用了spring cloud的微服务方案。
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793156,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793156,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793180" class="layer">#19楼</a><a name="3793180" id="comment_anchor_3793180"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-09-22 11:53</span> <a id="a_comment_author_3793180" href="http://www.cnblogs.com/longxianghui/" target="_blank">龙向辉</a> <a href="http://msg.cnblogs.com/send/%E9%BE%99%E5%90%91%E8%BE%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793180" class="blog_comment_body">
+                                <a href="#3792871" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3792871);">@@</a>
+                                jq.wen<br>我刚看了下文档，确实是服务提供者定时发送请求到eureka，谢谢提醒。
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793180,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793180,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793244" class="layer">#20楼</a><a name="3793244" id="comment_anchor_3793244"></a>  <span class="comment_date">2017-09-22 13:32</span> <a id="a_comment_author_3793244" href="http://www.cnblogs.com/coolyylu/" target="_blank">Ender.Lu</a> <a href="http://msg.cnblogs.com/send/Ender.Lu" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793244" class="blog_comment_body">其实就是微服务以及治理，群集等问题</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793244,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793244,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793254" class="layer">#21楼</a><a name="3793254" id="comment_anchor_3793254"></a>  <span class="comment_date">2017-09-22 13:43</span> <a id="a_comment_author_3793254" href="http://www.cnblogs.com/csproj/" target="_blank">刀是什么样的刀</a> <a href="http://msg.cnblogs.com/send/%E5%88%80%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%88%80" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793254" class="blog_comment_body">除了Steeltoe OSS 还可以试试别的<br><a href="http://www.cnblogs.com/shanyou/p/7440074.html" target="_blank">http://www.cnblogs.com/shanyou/p/7440074.html</a></div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793254,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793254,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793300" class="layer">#22楼</a><a name="3793300" id="comment_anchor_3793300"></a>  <span class="comment_date">2017-09-22 14:17</span> <a id="a_comment_author_3793300" href="http://www.cnblogs.com/Irving/" target="_blank">花儿笑弯了腰</a> <a href="http://msg.cnblogs.com/send/%E8%8A%B1%E5%84%BF%E7%AC%91%E5%BC%AF%E4%BA%86%E8%85%B0" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793300" class="blog_comment_body">
+                                <a href="#3791004" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3791004);">@@</a>
+                                响马奔腾<br><fieldset class="comment_quote"><legend><a href="#3791004" title="查看引用原文">引用</a></legend><br>支持，http://steeltoe.io/<br></fieldset><br>这个不错
+                            </div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793300,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793300,'Bury',this)">反对(0)</a></div><span id="comment_3793300_avatar" style="display:none;">http://pic.cnblogs.com/face/365537/20140218233545.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793359" class="layer">#23楼</a><a name="3793359" id="comment_anchor_3793359"></a>  <span class="comment_date">2017-09-22 14:40</span> <a id="a_comment_author_3793359" href="http://www.cnblogs.com/tiscs/" target="_blank">孙长宇</a> <a href="http://msg.cnblogs.com/send/%E5%AD%99%E9%95%BF%E5%AE%87" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793359" class="blog_comment_body">个人愚见，这个和Spring Cloud没太大关系吧，只是用了Eureka做注册发现。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793359,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793359,'Bury',this)">反对(0)</a></div><span id="comment_3793359_avatar" style="display:none;">http://pic.cnblogs.com/face/u36582.png?id=21103058</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793365" class="layer">#24楼</a><a name="3793365" id="comment_anchor_3793365"></a>  <span class="comment_date">2017-09-22 14:45</span> <a id="a_comment_author_3793365" href="http://www.cnblogs.com/liyi93/" target="_blank">huayi550</a> <a href="http://msg.cnblogs.com/send/huayi550" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793365" class="blog_comment_body">持续关注中，目前缺乏这方面的实战</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793365,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793365,'Bury',this)">反对(0)</a></div><span id="comment_3793365_avatar" style="display:none;">http://pic.cnblogs.com/face/u68819.jpg</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793465" class="layer">#25楼</a><a name="3793465" id="comment_anchor_3793465"></a>  <span class="comment_date">2017-09-22 15:58</span> <a id="a_comment_author_3793465" href="http://www.cnblogs.com/csyszf/" target="_blank">爱与正义的</a> <a href="http://msg.cnblogs.com/send/%E7%88%B1%E4%B8%8E%E6%AD%A3%E4%B9%89%E7%9A%84" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793465" class="blog_comment_body">其实我觉得docker swarm来做微服务更合适<br>一个是因为.net core对docker的支持做的很完善，文档 镜像都更新很及时，另外一个就是服务docker化后有许多优点，比如部署方便，管理方便等，而docker swarm又是现在对docker支持最好的<br><br>而且docker swarm从去年开始也变得比较完善，内置服务发现，负载均衡等，社区也比较活跃，进步很快<br><br>相对spring cloud和k8s这种大而全的微服务框架，我觉得使用docker swarm会更合适一些，用docker swarm做平台，提供部分基础设施，另外的API网关、日志中心、事件流等，都可以自己实现或者使用第三方的各种镜像来做，自由度比较高<br><br>我经验比较少，这是一些个人想法，可能不太成熟哈哈</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793465,'Digg',this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793465,'Bury',this)">反对(0)</a></div><span id="comment_3793465_avatar" style="display:none;">http://pic.cnblogs.com/face/1078989/20161211232247.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793901" class="layer">#26楼</a><a name="3793901" id="comment_anchor_3793901"></a>  <span class="comment_date">2017-09-22 22:59</span> <a id="a_comment_author_3793901" href="http://www.cnblogs.com/sam-yang/" target="_blank">euler</a> <a href="http://msg.cnblogs.com/send/euler" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793901" class="blog_comment_body">支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793901,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793901,'Bury',this)">反对(0)</a></div><span id="comment_3793901_avatar" style="display:none;">http://pic.cnblogs.com/face/61183/20130712105948.png</span>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3793979" class="layer">#27楼</a><a name="3793979" id="comment_anchor_3793979"></a>  <span class="comment_date">2017-09-23 10:04</span> <a id="a_comment_author_3793979" href="http://www.cnblogs.com/ypfnet/" target="_blank">P了个F</a> <a href="http://msg.cnblogs.com/send/P%E4%BA%86%E4%B8%AAF" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3793979" class="blog_comment_body">赞赞，虽然看不懂java的代码。向你学习！！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3793979,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3793979,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+
+                    <div class="feedbackItem">
+                        <div class="feedbackListSubtitle">
+                            <div class="feedbackManage">
+                                &nbsp;&nbsp;<span class="comment_actions"></span>
+                            </div>
+                            <a href="#3794198" class="layer">#28楼</a><a name="3794198" id="comment_anchor_3794198"></a><span id="comment-maxId" style="display:none;">3794198</span><span id="comment-maxDate" style="display:none;">2017/9/23 15:28:54</span>  <span class="comment_date">2017-09-23 15:28</span> <a id="a_comment_author_3794198" href="http://home.cnblogs.com/u/1119536/" target="_blank">poor_boss3</a> <a href="http://msg.cnblogs.com/send/poor_boss3" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+                        </div>
+                        <div class="feedbackCon">
+                            <div id="comment_body_3794198" class="blog_comment_body">兄弟，奥哲的啊</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3794198,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3794198,'Bury',this)">反对(0)</a></div>
+                        </div>
+                    </div>
+                    <div id="comments_pager_bottom"></div>
+                </div>
+                <script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+                <div id="comment_form" class="commentform">
+                    <a name="commentform"></a>
+                    <div id="divCommentShow"></div>
+                    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+                    <div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com">访问</a>网站首页。</div></div>
+                    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+                    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/developer/labs?fromSource=gwzcw.436876.436876.436876" target="_blank">【推荐】腾讯云上实验室 1小时搭建人工智能应用</a><br><a href="http://www.gcpowertools.com.cn/products/spreadjs/?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=SpreadJS&amp;utm_campaign=community" target="_blank">【推荐】可嵌入您系统的“在线Excel”！SpreadJS 纯前端表格控件</a><br><a href="http://click.aliyun.com/m/18488/" target="_blank">【推荐】阿里云“全民云计算”优惠升级</a><br></div>
+                    <div id="opt_under_post"></div>
+                    <div id="cnblogs_c1" class="c_ad_block"><a href="https://www.mtyun.com/promote/69f73a72-f46d-4103-88e5-94ed2f81259d/" target="_blank"><img width="300" height="250" src="https://images2017.cnblogs.com/news/24442/201709/24442-20170921101521025-1845913848.jpg" alt="美团云0921"></a></div>
+                    <div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/578931/" target="_blank">特斯拉的未来在中国，中国将成电动汽车领导者</a><br> ·  <a href="http://news.cnblogs.com/n/578930/" target="_blank">小米就校招风波道歉 对涉事员工通报批评</a><br> ·  <a href="http://news.cnblogs.com/n/578929/" target="_blank">力挽狂澜，重振微软，CEO纳德拉是怎样做到的？</a><br> ·  <a href="http://news.cnblogs.com/n/578926/" target="_blank">俩大兄弟学中国在硅谷搞无人零售，被美国人骂得狗血淋头……</a><br> ·  <a href="http://news.cnblogs.com/n/578928/" target="_blank">华为Mate 10 Pro完整外形曝光：竟没有指纹</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+                    <div id="cnblogs_c2" class="c_ad_block"><a href="https://www.jiguang.cn/devservice?source=bky&amp;hmsr=%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank"><img width="468" height="60" src="https://images2017.cnblogs.com/news/24442/201709/24442-20170908132742304-1045119416.gif" alt="极光0908"></a></div>
+                    <div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/576251/" target="_blank">如何阅读计算机科学类的书</a><br> ·  <a href="http://kb.cnblogs.com/page/578103/" target="_blank">Google 及其云智慧</a><br> ·  <a href="http://kb.cnblogs.com/page/575829/" target="_blank">做到这一点，你也可以成为优秀的程序员</a><br> ·  <a href="http://kb.cnblogs.com/page/566880/" target="_blank">写给立志做码农的大学生</a><br> ·  <a href="http://kb.cnblogs.com/page/569057/" target="_blank">架构腐化之谜</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+                    <div id="HistoryToday" class="c_ad_block"></div>
+                    <script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                    </script>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12" >
+        <div id="sideBar">
+            @Html.Action("SideBar", "Common")
+        </div>
+    </div>
+</div>
+
+
+

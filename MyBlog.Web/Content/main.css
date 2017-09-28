@@ -1,0 +1,113 @@
+﻿body {
+    padding-top: 70px;
+    background-color: #F0EEF5;
+}
+/*头部样式开始*/
+.btn-success {
+    color: #fff;
+    background-color: #18BC9D;
+    border-color: #18BC9D;
+}
+
+.navbar-inverse {
+    background: #2F3541;
+    border-color: #2F3541;
+}
+
+.navbar-nav li:hover {
+    background-color: #18BC9D;
+}
+
+#nav li {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+    #nav li a.active {
+        background-color: #18BC9D;
+        color: white;
+    }
+/*头部样式结束*/
+footer {
+    text-align: center;
+}
+#mainContent {
+    overflow: hidden;
+    padding: 20px;
+    border: 1px solid #dedede;
+    background-color: white;
+    margin-bottom:20px;
+}
+.panel-info > .panel-heading {
+    font-size: 18px;
+    color: white;
+    background-color: #18BC9D;
+    border-color: #18BC9D;
+}
+
+.label {
+    margin-bottom: 10px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.dayTitle {
+    color: #fff;
+    background-color: #45bcf9;
+    padding: 3px 6px;
+    font-size: 12px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    line-height: 25px;
+}
+
+    .dayTitle a {
+        color: white;
+    }
+
+.day .postTitle {
+    font-size: 21px;
+    line-height: 1.5em;
+    float: left;
+    clear: right;
+}
+
+.day .postTitle2 {
+    color: #555;
+}
+
+    .day .postTitle2:hover {
+        color: #0E90D2;
+        text-decoration: none;
+    }
+
+.postCon {
+    padding: 15px 0;
+    clear: both;
+}
+
+.postDesc {
+    clear: both;
+    color: #bcbcbc;
+    float: none;
+    text-align: left;
+    line-height: 200%;
+    font-size: 12px;
+}
+
+.clear {
+    clear: both;
+}
+
+.postSeparator {
+    border-top: 1px dashed silver;
+    margin: 20px 0;
+    clear: both;
+}

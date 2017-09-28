@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的Blog</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/Header.js"></script>
+</head>
+<body>
+    @Html.Action("Header", "Common")
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <hr style="border-top: 1px solid #F5F5DC;margin-bottom:10px;" />
+    <footer>
+        <p>&copy;@DateTime.Now.Year - @(DateTime.Now.Year+1) <a href="http://www.miitbeian.gov.cn" target="_blank">皖ICP备17020429号</a> </p>
+    </footer>
+
+</body>
+</html>

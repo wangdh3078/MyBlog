@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close">
+        <i class="fa fa-times-circle"></i>
+    </div>
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img src="~/Content/images/logo2.png" alt="" />
+                    </span>
+                </div>
+                <div class="logo-element">
+                    W
+                </div>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-book fa-fw"></i>
+                    <span class="nav-label">博客管理</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/Admin/ArticleManage" data-index="0">文章管理</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/Admin/ClassifiedManage">分类管理</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/Admin/TagsManage">标签管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cubes fa-fw"></i>
+                    <span class="nav-label">基础设置</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/Admin/BaseInfoManage" data-index="0">个人资料</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog fa-fw"></i>
+                    <span class="nav-label">系统设置</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/Admin/ParameterSetting" data-index="0">参数设置</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
