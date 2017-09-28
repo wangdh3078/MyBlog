@@ -19,7 +19,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult AddOrEditArticle(int id)
+        public ActionResult AddOrEditArticle(int? id)
         {
             return View();
         }

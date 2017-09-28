@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "AddOrEditArticle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Content/editor.md/css/editormd.min.css" rel="stylesheet" />
+<script src="~/Content/editor.md/editormd.min.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div id="test-editormd">
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var testEditor = editormd("test-editormd", {
+            width: "90%",
+            height: 720,
+            path: '/Content/editor.md/lib/',
+            emoji: true,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/Common/FileUpload",
+            //上传的后台只需要返回一个 JSON 数据，结构如下：
+            // {
+            //    success: 0 | 1,           // 0 表示上传失败，1 表示上传成功
+            //    message: "提示的信息，上传成功或上传失败及错误信息等。",
+            //    url: "图片地址"        // 上传成功时才返回
+            //}
+            onresize: function () {
+                //this.setMarkdown("state.loaded > bind onresize > window.onresize, editormd watch/unwatch/fullscreen/fullscreenExit/toolbar show|hide " + (new Date).getTime());
+                //console.log("onresize =>", this, this.id, this.settings);
+            }
+        });
+    });
+
+</script>
+

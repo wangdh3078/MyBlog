@@ -818,6 +818,7 @@
     <Content Include="Areas\Admin\Views\TagsManage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\BaseInfoManage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ParameterSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ArticleManage\AddOrEditArticle.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\contabs.min.js" />
