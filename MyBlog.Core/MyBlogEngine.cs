@@ -2,13 +2,9 @@
 using Autofac.Integration.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MyBlog.Core
@@ -37,6 +33,8 @@ namespace MyBlog.Core
 
         private void RegisterDependencies()
         {
+           // AppDomain.CurrentDomain.Load("MyBlog.Services");
+
             var builder = new ContainerBuilder();
 
             var baseType = typeof(IDependencyRegistrar);

@@ -51,6 +51,11 @@
     <Compile Include="Mapping\ClassifyMap.cs" />
     <Compile Include="Mapping\TagsMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
+    <Compile Include="Migrations\201709280342329_InitialMigration.cs" />
+    <Compile Include="Migrations\201709280342329_InitialMigration.Designer.cs">
+      <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respository.cs" />
@@ -68,6 +73,11 @@
       <Project>{DBF6CEA9-C98B-4A06-96D4-8087ABACE7BB}</Project>
       <Name>MyBlog.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709280342329_InitialMigration.resx">
+      <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

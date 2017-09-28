@@ -3,7 +3,7 @@ using System;
 
 namespace MyBlog.Entities
 {
-    public class User:BaseEntity
+    public class User : BaseEntity
     {
         /// <summary>
         /// 登录名
@@ -24,5 +24,10 @@ namespace MyBlog.Entities
         /// 添加时间
         /// </summary>
         public DateTime CreateDate { get; set; }
+
+        /// <summary>
+        /// 是否被禁用
+        /// </summary>
+        public bool IsDisabled { get; set; }
     }
 }

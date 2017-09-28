@@ -13,6 +13,7 @@ namespace MyBlog.Web
     {
         protected void Application_Start()
         {
+
             MyBlogEngine.Initialize();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
