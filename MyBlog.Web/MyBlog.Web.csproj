@@ -171,6 +171,7 @@
     <Compile Include="Controllers\BlogDetailsController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DependencyRegistrar.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -955,6 +956,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyBlog.Core\MyBlog.Core.csproj">
+      <Project>{0E125664-8D7B-4F87-BB6F-41F8E2FDB030}</Project>
+      <Name>MyBlog.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyBlog.Entities\MyBlog.Entities.csproj">
       <Project>{DBF6CEA9-C98B-4A06-96D4-8087ABACE7BB}</Project>
       <Name>MyBlog.Entities</Name>

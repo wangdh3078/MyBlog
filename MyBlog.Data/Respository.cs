@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -13,6 +11,7 @@ namespace MyBlog.Data
     public class Respository<T> : IRespository<T> where T : BaseEntity
     {
         private readonly MyBlogContext _context;
+        private readonly Logger _logger;
 
         private IDbSet<T> _entities;
 
@@ -21,9 +20,12 @@ namespace MyBlog.Data
         /// <summary>
         /// 构造函数
         /// </summary>
-        public Respository()
+        public Respository(
+            MyBlogContext context,
+            Logger logger)
         {
-            _context = new MyBlogContext();
+            _context = context;
+            _logger = logger;
         }
         #endregion
 
@@ -87,7 +89,17 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = Entities.Find(id);
+                Entities.Remove(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -97,7 +109,20 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Delete(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity == null)
+                    throw new ArgumentNullException("entity");
+
+                Entities.Remove(entity);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -107,7 +132,20 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Delete(IEnumerable<int> ids)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var id in ids)
+                {
+                    Entities.Remove(Entities.Find(id));
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -117,7 +155,20 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Delete(IEnumerable<T> list)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var entity in list)
+                {
+                    Entities.Remove(entity);
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw ex;
+            }
         }
 
 
@@ -128,7 +179,15 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Delete(Expression<Func<T, bool>> express)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Delete(Entities.Where(express));
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw ex;
+            }
         }
         #endregion
 
@@ -140,7 +199,16 @@ namespace MyBlog.Data
         /// <returns></returns>
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.SaveChanges();
+                return entity;
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>
@@ -150,7 +218,16 @@ namespace MyBlog.Data
         /// <returns></returns>
         public bool Update(IEnumerable<T> list)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw;
+            }
         }
         #endregion
 
@@ -162,7 +239,7 @@ namespace MyBlog.Data
         /// <returns></returns>
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return Entities.Find(id);
         }
 
         /// <summary>
@@ -172,7 +249,7 @@ namespace MyBlog.Data
         /// <returns></returns>
         public IEnumerable<T> GetList(Expression<Func<T, bool>> express)
         {
-            throw new NotImplementedException();
+            return Entities.Where(express);
         }
 
         /// <summary>
@@ -184,7 +261,11 @@ namespace MyBlog.Data
         /// <returns></returns>
         public Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express)
         {
-            throw new NotImplementedException();
+            Paging<T> paging = new Paging<T>();
+            var entities = Entities.Where(express);
+            paging.Total = entities.Count();
+            paging.Row = entities.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return paging;
         }
 
         /// <summary>
@@ -198,7 +279,18 @@ namespace MyBlog.Data
         /// <returns></returns>
         public Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express, string sort = "desc", string sortColumn = "CreateDate")
         {
-            throw new NotImplementedException();
+            Paging<T> paging = new Paging<T>();
+            var entities = Entities.Where(express);
+            paging.Total = entities.Count();
+            if (sort == "asc")
+            {
+                paging.Row = entities.OrderBy(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            }
+            else
+            {
+                paging.Row = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            }
+            return paging;
         }
 
         /// <summary>
@@ -213,6 +305,7 @@ namespace MyBlog.Data
 
         #endregion
 
+        #region 获取整张表
         /// <summary>
         /// 获取整张表
         /// </summary>
@@ -225,6 +318,6 @@ namespace MyBlog.Data
                 return _entities;
             }
         }
-
+        #endregion
     }
 }

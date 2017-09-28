@@ -9,11 +9,18 @@ namespace MyBlog.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserService _userService;
+
+        public HomeController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         public ActionResult Index()
         {
             try
             {
-                var u = new UserService().GetUser();
+                var u = _userService.GetUser();
             }
             catch (Exception ex)
             {

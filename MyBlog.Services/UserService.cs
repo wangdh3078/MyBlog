@@ -1,4 +1,5 @@
-﻿using MyBlog.Data;
+﻿using MyBlog.Core;
+using MyBlog.Data;
 using MyBlog.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,18 @@ namespace MyBlog.Services
 {
     public class UserService
     {
-        private readonly UserRespository _userRespository;
+        private readonly IRespository<User> _userRespository;
 
-        public UserService()
+        #region 构造函数
+        public UserService(IRespository<User> userRespository)
         {
-            _userRespository = new UserRespository();
-        }
+            _userRespository = userRespository;
+        } 
+        #endregion
 
         public User GetUser()
         {
-            return _userRespository.GetUser();
+            return _userRespository.GetById(0);
         }
     }
 }
