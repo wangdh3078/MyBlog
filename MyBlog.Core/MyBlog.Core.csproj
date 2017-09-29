@@ -77,9 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperConfiguration.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="CryptoHelper.cs" />
     <Compile Include="IDependencyRegistrar.cs" />
+    <Compile Include="IMapperConfiguration.cs" />
     <Compile Include="IRespository.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MyBlogEngine.cs" />

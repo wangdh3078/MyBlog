@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace MyBlog.Core
         /// </summary>
         private string assemblySkipLoadingPattern = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Rhino|^Telerik|^Iesi|^TestDriven|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^Dapper|^DapperExtensions";
         #endregion
+
         /// <summary>
         /// 初始化依赖注入
         /// </summary>
@@ -29,11 +31,13 @@ namespace MyBlog.Core
         {
             //注册依赖注入
             _context.RegisterDependencies();
+            _context.RegisterMapperConfiguration();
         }
 
+        #region 依赖注入
         private void RegisterDependencies()
         {
-           // AppDomain.CurrentDomain.Load("MyBlog.Services");
+            // AppDomain.CurrentDomain.Load("MyBlog.Services");
 
             var builder = new ContainerBuilder();
 
@@ -61,5 +65,33 @@ namespace MyBlog.Core
             //设置依赖解析器
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
+        #endregion
+
+        #region 注册映射配置
+        /// <summary>
+        /// 注册映射配置
+        /// </summary>
+        protected virtual void RegisterMapperConfiguration()
+        {
+
+            var baseType = typeof(IMapperConfiguration);
+            var assembies = AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(t => !Regex.IsMatch(t.FullName, assemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled));
+            var mcTypes = assembies.SelectMany(a => a.GetTypes())
+                           .Where(p => baseType.IsAssignableFrom(p) && p != baseType)
+                           .ToArray();
+            var mcInstances = new List<IMapperConfiguration>();
+            foreach (var mcType in mcTypes)
+                mcInstances.Add((IMapperConfiguration)Activator.CreateInstance(mcType));
+            //sort
+            mcInstances = mcInstances.AsQueryable().OrderBy(t => t.Order).ToList();
+            //get configurations
+            var configurationActions = new List<Action<IMapperConfigurationExpression>>();
+            foreach (var mc in mcInstances)
+                configurationActions.Add(mc.GetConfiguration());
+            //register
+            AutoMapperConfiguration.Init(configurationActions);
+        } 
+        #endregion
     }
 }

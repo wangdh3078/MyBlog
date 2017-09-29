@@ -1,0 +1,41 @@
+﻿@{
+
+    var data = ViewBag.Source as List<SelectListItem>;
+    bool isMulti = ViewBag.IsMulti;
+    string selectClass = ViewBag.Class;
+    string selectedValue = ViewBag.SelectedValue;
+    var selectedVals = selectedValue.Split(',');
+}
+
+@if (string.IsNullOrEmpty(selectedValue))
+{
+    <select @(isMulti == true ? "multiple='multiple'" : "") class="@selectClass" id="@ViewBag.Id" name="@ViewBag.Id" data-live-search="true">
+        @foreach (var selectItem in data)
+        {
+            <option value="@selectItem.Value" @selectItem.Selected>@selectItem.Text</option>
+        }
+    </select>
+}
+else
+{
+    if (isMulti)
+    {
+        <select multiple='multiple' class="@selectClass" id="@ViewBag.Id" name="@ViewBag.Id" data-live-search="true">
+            @foreach (var selectItem in data)
+            {
+                var isSelected = Array.IndexOf(selectedVals, selectItem.Value);
+
+                <option value="@selectItem.Value" @(isSelected != -1 ? "selected='selected'" : "")>@selectItem.Text</option>
+            }
+        </select>
+    }
+    else
+    {
+        <select class="@selectClass" id="@ViewBag.Id" name="@ViewBag.Id" data-live-search="true">
+            @foreach (var selectItem in data)
+            {
+                <option value="@selectItem.Value" @(selectItem.Value == selectedValue ? "selected='selected'" : "")>@selectItem.Text</option>
+            }
+        </select>
+    }
+}

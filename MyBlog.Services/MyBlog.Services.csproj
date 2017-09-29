@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogService.cs" />
+    <Compile Include="ClassifyService.cs" />
     <Compile Include="DependencyRegistrar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagsService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,14 +18,6 @@ namespace MyBlog.Web.Controllers
 
         public ActionResult Index()
         {
-            try
-            {
-                var u = _userService.GetUser();
-            }
-            catch (Exception ex)
-            {
-
-            }
             return View();
         }
     }

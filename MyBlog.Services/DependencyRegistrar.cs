@@ -1,11 +1,6 @@
 ﻿using Autofac;
 using MyBlog.Core;
 using MyBlog.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBlog.Services
 {
@@ -24,6 +19,15 @@ namespace MyBlog.Services
 
             //注册用户服务
             builder.RegisterType<UserService>().InstancePerDependency();
+
+            //注册博客服务
+            builder.RegisterType<BlogService>().InstancePerDependency();
+
+            //注册标签服务
+            builder.RegisterType<TagsService>().InstancePerDependency();
+
+            //注册分类服务
+            builder.RegisterType<ClassifyService>().InstancePerDependency();
         }
     }
 }

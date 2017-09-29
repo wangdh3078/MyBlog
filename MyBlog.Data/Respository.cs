@@ -204,6 +204,7 @@ namespace MyBlog.Data
         {
             try
             {
+              //  _context.Entry(entity).State = EntityState.Modified;
                 _context.SaveChanges();
                 return entity;
             }
@@ -267,7 +268,7 @@ namespace MyBlog.Data
             Paging<T> paging = new Paging<T>();
             var entities = Entities.Where(express);
             paging.Total = entities.Count();
-            paging.Row = entities.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            paging.Row = entities.OrderByDescending(t=> "CreateDate").Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return paging;
         }
 
