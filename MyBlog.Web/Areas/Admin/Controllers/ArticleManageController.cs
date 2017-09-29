@@ -66,7 +66,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 {
                     entity = _blogService.GetById(blog.Id);
                 }
-                entity = blog.ToEntity();
+                entity = blog.ToEntity(entity);
                 if (entity.IsPublished)
                 {
                     entity.PublishedDate = DateTime.Now;

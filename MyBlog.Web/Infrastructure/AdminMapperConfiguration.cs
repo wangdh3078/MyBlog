@@ -23,9 +23,9 @@ namespace MyBlog.Web
             {
                 //Blog
                 cfg.CreateMap<BlogViewModel, Blog>()
-                .ForMember("CreateDate", mo => mo.Ignore());
-                cfg.CreateMap<Blog, BlogViewModel>();
-                // .ForMember(t => t.CreateDate, mo => mo.Ignore()); 
+                .ForMember(t=>t.CreateDate, mo => mo.Ignore());
+                cfg.CreateMap<Blog, BlogViewModel>()
+                 .ForMember(t => t.CreateDate, mo => mo.Ignore());
 
                 //Classify
                 cfg.CreateMap<ClassifyViewModel, Classify>()
