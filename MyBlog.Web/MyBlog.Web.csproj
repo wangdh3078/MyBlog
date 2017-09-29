@@ -1088,7 +1088,6 @@
     <Content Include="Scripts\plugins\icheck-1.x\demo\css\montserrat-regular.svg" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\css\normalize.css" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\index.html" />
-    <Content Include="Scripts\plugins\icheck-1.x\demo\js\custom.js" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\js\custom.min.js" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\js\jquery.js" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\js\zepto.js" />
@@ -1239,7 +1238,6 @@
     <Content Include="Views\Common\Header.cshtml" />
     <Content Include="Scripts\plugins\icheck-1.x\bower.json" />
     <Content Include="Scripts\plugins\icheck-1.x\CHANGELOG.md" />
-    <Content Include="Scripts\plugins\icheck-1.x\demo\css\custom.styl" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\css\montserrat-bold.eot" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\css\montserrat-bold.ttf" />
     <Content Include="Scripts\plugins\icheck-1.x\demo\css\montserrat-bold.woff" />

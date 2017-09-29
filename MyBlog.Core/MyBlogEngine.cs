@@ -37,7 +37,7 @@ namespace MyBlog.Core
         #region 依赖注入
         private void RegisterDependencies()
         {
-            // AppDomain.CurrentDomain.Load("MyBlog.Services");
+            AppDomain.CurrentDomain.Load("MyBlog.Services");
 
             var builder = new ContainerBuilder();
 
