@@ -1,6 +1,33 @@
-﻿.tooltip-arrow {
-    border-top-color:red !important;
+﻿.error, .error + div, .error + div>button {
+    border: 1px solid red;
 }
-.tooltip-inner {
-    background-color:red;
+
+div.error {
+    display: inline-block;
+    /*max-width: 200px;
+    min-width:100px;*/
+    position: absolute;
+    background-color: red;
+    opacity: 0.8;
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 4px;
+    z-index: 99999;
+    top: -35px;
+    left: 70%;
+    
 }
+
+    div.error:before, div.error:after {
+        content: "";
+        display: block;
+        border-width: 10px;
+        position: absolute;
+        bottom: -20px;
+        left: 40%;
+        border-style: solid dashed dashed;
+        border-color: red transparent transparent;
+        font-size: 0;
+        line-height: 0;
+    }

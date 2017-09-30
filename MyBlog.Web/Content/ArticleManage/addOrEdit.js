@@ -7,6 +7,12 @@
             radioClass: 'iradio_square-green',
             increaseArea: '20%'
         });
+        $("#classify").change(function () {
+            $("#addOrEditArticl").valid();
+        });
+        $("#tags").change(function () {
+            $("#addOrEditArticl").valid();
+        });
         this.initEditor();
         this.validExtend();
         this.valid();
@@ -37,25 +43,27 @@
             onresize: function () {
                 //this.setMarkdown("state.loaded > bind onresize > window.onresize, editormd watch/unwatch/fullscreen/fullscreenExit/toolbar show|hide " + (new Date).getTime());
                 //console.log("onresize =>", this, this.id, this.settings);
+            },
+            onchange: function () {
+                $("#addOrEditArticl").valid();
             }
         });
     },
     /*验证扩展*/
     validExtend: function () {
         $.validator.addMethod("validEditormd", function (value, element) {
-            debugger;
             if (!article.editor || !article.editor.getMarkdown()) {
                 return false;
             }
             return true;
-        }, '内容不能为空！');
+        });
 
         $.validator.addMethod("validSelect", function (value, element) {
             if (value == 0) {
                 return false;
             }
             return true;
-        }, '这是必填字段！');
+        });
     },
     /*验证*/
     valid: function () {
@@ -69,14 +77,22 @@
                 tags: "required",
                 editormdContent: "validEditormd"
             },
+            messages: {
+                title: "标题不能为空",
+                classify:"请选择分类",
+                tags: "请选择标签",
+                editormdContent: "内容不能为空"
+            },
             errorElement: 'div',
             errorPlacement: function (error, element) {
-                debugger;
-                error.addClass("tooltip  top in").css({ top: "-30px", left: "90%", opacity: "0.7" });
-                var div = '<div class="tooltip-arrow" ></div><div class="tooltip-inner">' + error.text() + '</div>';
-                error.empty();
-                $(div).appendTo(error);
-                error.insertAfter(element);
+                if (element.prop("tagName") == "SELECT") {
+                    error.insertBefore(element.parent());
+                } else {
+                    error.insertBefore(element);
+                }
+            },
+            success: function (ele) {
+                ele.removeClass('error')
             }
         });
     },
