@@ -1,0 +1,25 @@
+﻿@model MyBlog.Entities.Blog
+@{
+    ViewBag.Title = "博客详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/articleDetails.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12">
+        <div style="" id="mainContent">
+            <h1>@Model.Title</h1>
+            @Html.Raw(Model.Context)
+            <hr />
+            <div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/farb/category/749960.html" target="_blank">EF</a></div>
+            <div id="EntryTag">标签: <a href="http://www.cnblogs.com/farb/tag/EF/">EF</a></div>
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12">
+        <div id="sideBar">
+            @Html.Action("SideBar", "Common")
+        </div>
+    </div>
+</div>
+
+
+

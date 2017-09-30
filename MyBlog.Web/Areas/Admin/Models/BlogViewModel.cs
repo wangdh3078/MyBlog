@@ -8,7 +8,7 @@ namespace MyBlog.Web.Areas.Admin.Models
         public BlogViewModel()
         {
             Tags = new List<TagsViewModel>();
-            Classify = new List<ClassifyViewModel>();
+            Classify = new ClassifyViewModel();
         }
 
         public int Id { get; set; }
@@ -55,7 +55,7 @@ namespace MyBlog.Web.Areas.Admin.Models
         /// <summary>
         /// 分类集合
         /// </summary>
-        public List<ClassifyViewModel> Classify { get; set; }
+        public ClassifyViewModel Classify { get; set; }
     }
 
 

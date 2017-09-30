@@ -12,7 +12,7 @@ namespace MyBlog.Data.Mapping
     {
         public ClassifyMap()
         {
-
+        
         }
     }
 }

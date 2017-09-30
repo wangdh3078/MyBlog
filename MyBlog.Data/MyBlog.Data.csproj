@@ -55,6 +55,10 @@
     <Compile Include="Migrations\201709280342329_InitialMigration.Designer.cs">
       <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709301449396_changeStruct.cs" />
+    <Compile Include="Migrations\201709301449396_changeStruct.Designer.cs">
+      <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709280342329_InitialMigration.resx">
       <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709301449396_changeStruct.resx">
+      <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

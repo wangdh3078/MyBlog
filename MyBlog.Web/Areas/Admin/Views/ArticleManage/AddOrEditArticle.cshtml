@@ -18,10 +18,10 @@
         <div class="row form-group">
             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                 <span>标题：</span>
-               
+
             </div>
             <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-                <input type="text" class="form-control"  id="title" name="title" placeholder="请输入标题" value="@Model.Title" />
+                <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" value="@Model.Title" />
             </div>
         </div>
         <div class="row form-group">
@@ -29,7 +29,7 @@
                 <span>分类：</span>
             </div>
             <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-                @Html.Action("CreateSelect", "Common", new { id = "classify", source = ViewBag.Classify, value = "Id", text = "Name", @class = "selectpicker form-control", selectedValue = string.Join(",", Model.Classify.Select(t => t.Id)) })
+                @Html.Action("CreateSelect", "Common", new { id = "classify", source = ViewBag.Classify, value = "Id", text = "Name", @class = "selectpicker form-control", selectedValue =new int[]{ Model.Classify.Id } })
             </div>
         </div>
         <div class="row form-group">

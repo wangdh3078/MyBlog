@@ -27,11 +27,8 @@ namespace MyBlog.Data.Mapping
                   .MapLeftKey("BlogId")
                   .MapRightKey("TagId"));
 
-            this.HasMany(t => t.Classify)
-                .WithMany(t => t.Blogs)
-                .Map(m => m.ToTable("BlogsClassify")
-                .MapLeftKey("BlogId")
-                .MapRightKey("ClassifyId"));
+            this.HasRequired(t => t.Classify)
+                .WithMany(c => c.Blogs);
         }
     }
 }

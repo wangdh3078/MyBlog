@@ -1,0 +1,44 @@
+﻿img, image {
+    max-width: 100%;
+}
+
+
+h1 {
+    font-size: 130%;
+    font-weight: bold;
+    border-bottom: 1px solid #999;
+    line-height: 2em;
+    width: 100%;
+    padding-left: 5px;
+    color: #390;
+    text-align:center;
+}
+h2 {
+    color: #fff;
+    padding-left: 15px;
+    background: #6FA833 !important;
+    border-radius: 5px !important;
+    text-shadow: 2px 2px 3px #222222;
+    font-family: "微软雅黑","宋体","黑体",Arial;
+    margin-bottom: 5px;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+h3 {
+    color: #6FA833;
+    border-left: 13px solid #6FA833;
+    padding: 5px;
+    background-color: #f5f5f5;
+    font-size:16px;
+    font-weight:bold;
+}
+h4 {
+    color: #cd4900;
+    border-bottom: 1px solid #cd4900;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0;
+}

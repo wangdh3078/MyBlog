@@ -12,7 +12,7 @@ namespace MyBlog.Entities
         public Blog()
         {
             Tags = new HashSet<Tags>();
-            Classify = new HashSet<Classify>();
+            Classify = new Classify();
         }
         /// <summary>
         /// 博客标题
@@ -62,6 +62,6 @@ namespace MyBlog.Entities
         /// <summary>
         /// 分类集合
         /// </summary>
-        public virtual ICollection<Classify> Classify { get; set; }
+        public virtual Classify Classify { get; set; }
     }
 }

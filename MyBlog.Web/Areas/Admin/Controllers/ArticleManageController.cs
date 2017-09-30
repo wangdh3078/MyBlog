@@ -71,8 +71,6 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 {
                     entity.PublishedDate = DateTime.Now;
                 }
-                var classifyIds = entity.Classify.Select(t => t.Id).ToList();
-                entity.Classify = _classifyService.GetList(t => classifyIds.Contains(t.Id)).ToList();
                 var tagsIds = entity.Tags.Select(t => t.Id).ToList();
                 entity.Tags = _tagsService.GetList(t => tagsIds.Contains(t.Id)).ToList();
 

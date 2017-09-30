@@ -18,7 +18,6 @@ namespace MyBlog.Data
         public MyBlogContext()
           : base()
         {
-
         }
         public MyBlogContext(string nameOrConnectionString= "MyBlogContext")
             : base(nameOrConnectionString)

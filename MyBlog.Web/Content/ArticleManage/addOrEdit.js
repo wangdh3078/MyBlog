@@ -79,7 +79,7 @@
             },
             messages: {
                 title: "标题不能为空",
-                classify:"请选择分类",
+                classify: "请选择分类",
                 tags: "请选择标签",
                 editormdContent: "内容不能为空"
             },
@@ -101,7 +101,6 @@
         if (!$("#addOrEditArticl").valid()) {
             return;
         }
-        return;
         //console.log(editor.getMarkdown());       // 获取 Markdown 源码
         //console.log(editor.getHTML());           // 获取 Textarea 保存的 HTML 源码
         //console.log(editor.getPreviewedHTML());  // 获取预览窗口里的 HTML，在开启 watch 且没有开启 saveHTMLToTextarea 时使用
@@ -114,7 +113,7 @@
         var model = {
             Id: $("#id").val(),
             Title: $("#title").val(),
-            Classify: $("#classify").val() == 0 ? [] : [{ Id: $("#classify").val() }],
+            Classify: $("#classify").val(),
             Tags: tags,
             ShortContext: article.editor.getMarkdown(),
             Context: article.editor.getHTML(),
