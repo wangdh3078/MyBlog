@@ -1429,6 +1429,7 @@
     <Content Include="Scripts\plugins\jquery.validate\localization\methods_fi.js" />
     <Content Include="Scripts\plugins\jquery.validate\localization\methods_nl.js" />
     <Content Include="Scripts\plugins\jquery.validate\localization\methods_pt.js" />
+    <Content Include="Scripts\plugins\jquery.validate\validation.css" />
     <Content Include="Scripts\plugins\layer\layer.js" />
     <Content Include="Scripts\plugins\layer\mobile\layer.js" />
     <Content Include="Scripts\plugins\layer\mobile\need\layer.css" />

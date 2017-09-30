@@ -6,20 +6,22 @@
 <link href="~/Scripts/plugins/editor.md/css/editormd.min.css" rel="stylesheet" />
 <link href="~/Scripts/plugins/bootstrap-select-1.12.4/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/Scripts/plugins/icheck-1.x/skins/all.css" rel="stylesheet" />
+<link href="~/Scripts/plugins/jquery.validate/validation.css" rel="stylesheet" />
 <script src="~/Scripts/plugins/editor.md/editormd.min.js"></script>
 <script src="~/Scripts/plugins/bootstrap-select-1.12.4/dist/js/bootstrap-select.min.js"></script>
 <script src="~/Scripts/plugins/bootstrap-select-1.12.4/js/i18n/defaults-zh_CN.js"></script>
 <script src="~/Scripts/plugins/icheck-1.x/icheck.min.js"></script>
-<div class="container-fluid" style="margin-top:20px;">
-    <form>
+<div class="container-fluid" style="margin-top:40px;">
+    <form id="addOrEditArticl">
         @Html.AntiForgeryToken()
         <input type="hidden" value="@Model.Id" id="id" />
         <div class="row form-group">
             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                 <span>标题：</span>
+               
             </div>
             <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-                <input type="text" class="form-control" id="title" placeholder="请输入标题" value="@Model.Title" />
+                <input type="text" class="form-control"  id="title" name="title" placeholder="请输入标题" value="@Model.Title" />
             </div>
         </div>
         <div class="row form-group">
@@ -43,7 +45,8 @@
                 <span>内容：</span>
             </div>
             <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-                <div id="editormd">
+                <input type="hidden" id="editormdContent" name="editormdContent" />
+                <div id="editormd" name="editormd">
                     <textarea style="display:none;">@Model.ShortContext</textarea>
                 </div>
             </div>
