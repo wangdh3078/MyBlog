@@ -186,8 +186,12 @@
   <ItemGroup>
     <Content Include="Content\articleDetails.css" />
     <Content Include="Content\ArticleManage\addOrEdit.js" />
+    <Content Include="Content\ArticleManage\ArticleManage.js" />
+    <Content Include="Content\ClassifiedManage\addOrEdit.js" />
     <Content Include="Content\ClassifiedManage\ClassifiedManage.js" />
     <Content Include="Content\common.css" />
+    <Content Include="Content\TagsManage\addOrEdit.js" />
+    <Content Include="Content\TagsManage\TagsManage.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.min.js" />
@@ -1228,6 +1232,7 @@
     <Content Include="Scripts\plugins\bootstrap-select-1.12.4\sass\variables.scss" />
     <Content Include="Areas\Admin\Views\Common\CreateSelect.cshtml" />
     <Content Include="Areas\Admin\Views\ClassifiedManage\AddOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\TagsManage\AddOrEdit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\contabs.min.js" />

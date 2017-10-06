@@ -125,7 +125,6 @@
             IsPublished: $("input[name='iCheck']:checked").val() == 1 ? true : false,
             "__RequestVerificationToken": token
         };
-        console.log(model);
         $.ajax({
             url: "/Admin/ArticleManage/AddOrEditArticle",
             type: "POST",

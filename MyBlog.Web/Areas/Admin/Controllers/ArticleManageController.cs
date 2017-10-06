@@ -2,6 +2,7 @@
 using MyBlog.Services;
 using MyBlog.Web.Areas.Admin.Models;
 using MyBlog.Web.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,26 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 分页获取分类列表数据
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public string GetPagingData(int pageSize, int pageNumber, string title)
+        {
+            var data = _blogService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(title) ? true : t.Title.Contains(title)) & t.IsDeleted == false);
+            JsonSerializerSettings setting = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.None
+            };
+            var ret = JsonConvert.SerializeObject(new { total = data.Total, rows = data.Rows }, setting);
+            return ret;
+        }
 
+        #region 添加或编辑
         /// <summary>
         /// 新增或编辑
         /// </summary>
@@ -49,6 +69,8 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             ViewBag.Classify = _classifyService.GetList(t => t.IsDeleted == false);
             return View(model);
         }
+
+
         /// <summary>
         /// 添加或编辑
         /// </summary>
@@ -81,7 +103,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 else
                 {
                     entity.CreateDate = DateTime.Now;
-                    entity.Author = 1;
+                    entity.Author = CurrentUser.Id;
                     _blogService.Add(entity);
                 }
                 return Json(new { success = true, message = "保存成功" });
@@ -90,6 +112,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
-        }
+        } 
+        #endregion
     }
 }

@@ -1,11 +1,12 @@
-﻿@model MyBlog.Entities.Classify
+﻿@model MyBlog.Entities.Tags
+
 @{
     ViewBag.Title = "AddOrEdit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <link href="~/Scripts/plugins/jquery.validate/validation.css" rel="stylesheet" />
 <div class="container-fluid" style="margin-top:40px;">
-    <form id="addOrEditClassify">
+    <form id="addOrEditTag">
         @Html.AntiForgeryToken()
         <input type="hidden" value="@Model.Id" id="id" />
         <div class="row form-group">
@@ -13,7 +14,7 @@
                 <span>名称：</span>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                <input type="text" class="form-control" id="classfiyName" name="classfiyName" placeholder="请输入分类名称" value="@Model.Name" />
+                <input type="text" class="form-control" id="tagName" name="tagName" placeholder="请输入标签名称" value="@Model.Name" />
             </div>
         </div>
         <div class="row form-group">
@@ -23,4 +24,4 @@
         </div>
     </form>
 </div>
-<script src="~/Content/ClassifiedManage/addOrEdit.js"></script>
+<script src="~/Content/TagsManage/addOrEdit.js"></script>

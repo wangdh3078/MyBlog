@@ -1,4 +1,4 @@
-﻿var ClassifiedManage = {
+﻿var TagsManage = {
     tab: null,
     layerIndex: 0,
     init: function () {
@@ -9,10 +9,10 @@
         $("#delete").click(this.deleteItems);
     },
     tableInit: function () {
-        ClassifiedManage.tab = $('#classifiedTable');
-        ClassifiedManage.tab.bootstrapTable({
-            url: '/Admin/ClassifiedManage/GetPagingData',         //请求后台的URL（*）
-            queryParams: ClassifiedManage.searchParams,//传递参数（*）
+        TagsManage.tab = $('#tagsTable');
+        TagsManage.tab.bootstrapTable({
+            url: '/Admin/TagsManage/GetPagingData',         //请求后台的URL（*）
+            queryParams: TagsManage.searchParams,//传递参数（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
             columns: [{
@@ -35,39 +35,39 @@
         return obj;
     },
     searchData: function () {
-        ClassifiedManage.tab.bootstrapTable('destroy');
-        ClassifiedManage.tableInit();
+        TagsManage.tab.bootstrapTable('destroy');
+        TagsManage.tableInit();
     },
     addItem: function () {
-        ClassifiedManage.layerIndex = layer.open({
+        TagsManage.layerIndex = layer.open({
             type: 2,
-            content: "/Admin/ClassifiedManage/AddOrEdit",
+            content: "/Admin/TagsManage/AddOrEdit",
             area: ["40%", "40%"]
         });
     },
     editItem: function () {
-        var rows = ClassifiedManage.tab.bootstrapTable('getSelections');
+        var rows = TagsManage.tab.bootstrapTable('getSelections');
         if (rows.length != 1) {
             layer.msg("请选择一行数据进行编辑");
             return;
         }
         var id = rows[0].Id;
-        ClassifiedManage.layerIndex = layer.open({
+        TagsManage.layerIndex = layer.open({
             type: 2,
-            content: "/Admin/ClassifiedManage/AddOrEdit?id=" + id,
+            content: "/Admin/TagsManage/AddOrEdit?id=" + id,
             area: ["40%", "40%"]
         });
     },
     deleteItems: function () {
-        var rows = ClassifiedManage.tab.bootstrapTable('getSelections');
+        var rows = TagsManage.tab.bootstrapTable('getSelections');
         if (rows.length == 0) {
             layer.msg("请选择要删除的数据");
             return;
         }
-        ClassifiedManage.layerIndex = layer.confirm("确认删除？",
+        TagsManage.layerIndex = layer.confirm("确认删除？",
             {
                 btn: ['确定', '取消'],
-                icon:2
+                icon: 2
 
             },
             function () {
@@ -77,13 +77,13 @@
                     ids.push(rows[i].Id);
                 }
                 $.ajax({
-                    url: "/Admin/ClassifiedManage/Delete",
+                    url: "/Admin/TagsManage/Delete",
                     type: "POST",
                     data: { ids: ids },
                     success: function (data) {
                         if (data.success) {
                             layer.msg("删除成功", { time: 2000 }, function () {
-                                ClassifiedManage.tab.bootstrapTable("refresh");
+                                TagsManage.tab.bootstrapTable("refresh");
                             });
                         } else {
                             layer.msg("删除失败", { time: 2000 }, function () {
@@ -95,16 +95,16 @@
                 });
             },
             function () {
-                layer.close(ClassifiedManage.layerIndex);
+                layer.close(TagsManage.layerIndex);
             }
         );
 
     },
     refresh: function () {
-        layer.close(ClassifiedManage.layerIndex);
-        ClassifiedManage.tab.bootstrapTable("refresh");
+        layer.close(TagsManage.layerIndex);
+        TagsManage.tab.bootstrapTable("refresh");
     }
 };
 $(function () {
-    ClassifiedManage.init();
+    TagsManage.init();
 })
