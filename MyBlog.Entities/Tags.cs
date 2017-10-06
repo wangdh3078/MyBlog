@@ -25,6 +25,11 @@ namespace MyBlog.Entities
         public DateTime CreateDate { get; set; }
 
         /// <summary>
+        /// 添加人ID
+        /// </summary>
+        public int CreateUserId { get; set; }
+
+        /// <summary>
         /// 是否已经被删除
         /// </summary>
         public bool IsDeleted { get; set; }

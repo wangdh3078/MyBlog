@@ -73,7 +73,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 }
                 var tagsIds = entity.Tags.Select(t => t.Id).ToList();
                 entity.Tags = _tagsService.GetList(t => tagsIds.Contains(t.Id)).ToList();
-
+                entity.Classify = _classifyService.GetById(entity.Classify.Id);
                 if (blog.Id != 0)
                 {
                     _blogService.Update(entity);

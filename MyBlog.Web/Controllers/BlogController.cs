@@ -24,7 +24,7 @@ namespace MyBlog.Web.Controllers
 
         public ActionResult BlogList()
         {
-            var blogs = _blogService.GetPagingList(10, 1, t => t.IsPublished == true & t.IsDeleted == false).Row.ToList();
+            var blogs = _blogService.GetPagingList(10, 1, t => t.IsPublished == true & t.IsDeleted == false).Rows.ToList();
             foreach (var blog in blogs)
             {
                 blog.Context = ReplaceHtmlTag(blog.Context);

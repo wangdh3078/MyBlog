@@ -1,21 +1,25 @@
 ﻿var article = {
     editor: null,/*编辑器*/
+    validator: null,
     /*初始化*/
     init: function () {
+        this.initEditor();
+        this.validExtend();
+        this.valid();
         $('input[name="iCheck"]').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
             increaseArea: '20%'
         });
+        $("#title").blur(function () {
+            article.validator.element("#title");
+        });
         $("#classify").change(function () {
-            $("#addOrEditArticl").valid();
+            article.validator.element("#classify");
         });
         $("#tags").change(function () {
-            $("#addOrEditArticl").valid();
+            article.validator.element("#tags");
         });
-        this.initEditor();
-        this.validExtend();
-        this.valid();
         $("#btn_submit").click(this.save);
     },
     /*初始化编辑器*/
@@ -45,7 +49,8 @@
                 //console.log("onresize =>", this, this.id, this.settings);
             },
             onchange: function () {
-                $("#addOrEditArticl").valid();
+                //$("#addOrEditArticl").valid();
+                article.validator.element("#editormdContent");
             }
         });
     },
@@ -67,7 +72,7 @@
     },
     /*验证*/
     valid: function () {
-        $("#addOrEditArticl").validate({
+        article.validator = $("#addOrEditArticl").validate({
             rules: {
                 title: "required",
                 classify: {
@@ -113,13 +118,14 @@
         var model = {
             Id: $("#id").val(),
             Title: $("#title").val(),
-            Classify: $("#classify").val(),
+            Classify: { id: $("#classify").val() },
             Tags: tags,
             ShortContext: article.editor.getMarkdown(),
             Context: article.editor.getHTML(),
             IsPublished: $("input[name='iCheck']:checked").val() == 1 ? true : false,
             "__RequestVerificationToken": token
         };
+        console.log(model);
         $.ajax({
             url: "/Admin/ArticleManage/AddOrEditArticle",
             type: "POST",

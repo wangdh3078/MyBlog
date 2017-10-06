@@ -167,6 +167,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParameterSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagsManageController.cs" />
+    <Compile Include="Areas\Admin\Filter\AuthenticationAttribute.cs" />
     <Compile Include="Areas\Admin\Models\BlogViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ClassifyViewModel.cs" />
     <Compile Include="Areas\Admin\Models\TagsViewModel.cs" />
@@ -185,6 +186,9 @@
   <ItemGroup>
     <Content Include="Content\articleDetails.css" />
     <Content Include="Content\ArticleManage\addOrEdit.js" />
+    <Content Include="Content\ClassifiedManage\ClassifiedManage.js" />
+    <Content Include="Content\common.css" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.min.js" />
     <Content Include="Scripts\plugins\bootstrap-select-1.12.4\.gitignore" />
@@ -1223,6 +1227,7 @@
     <Content Include="Scripts\plugins\bootstrap-select-1.12.4\sass\bootstrap-select.scss" />
     <Content Include="Scripts\plugins\bootstrap-select-1.12.4\sass\variables.scss" />
     <Content Include="Areas\Admin\Views\Common\CreateSelect.cshtml" />
+    <Content Include="Areas\Admin\Views\ClassifiedManage\AddOrEdit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\contabs.min.js" />
@@ -1441,6 +1446,7 @@
     <Content Include="Scripts\plugins\layer\theme\default\loading-1.gif" />
     <Content Include="Scripts\plugins\layer\theme\default\loading-2.gif" />
     <Content Include="Scripts\plugins\metisMenu\jquery.metisMenu.js" />
+    <Content Include="Scripts\plugins\moment\moment.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
     <Content Include="Scripts\respond.js" />

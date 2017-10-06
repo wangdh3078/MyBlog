@@ -267,7 +267,7 @@ namespace MyBlog.Data
             Paging<T> paging = new Paging<T>();
             var entities = Entities.Where(express);
             paging.Total = entities.Count();
-            paging.Row = entities.OrderByDescending(t => "CreateDate").Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            paging.Rows = entities.OrderByDescending(t => "CreateDate").Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return paging;
         }
 
@@ -287,12 +287,13 @@ namespace MyBlog.Data
             paging.Total = entities.Count();
             if (sort == "asc")
             {
-                paging.Row = entities.OrderBy(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                paging.Rows = entities.OrderBy(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
             else
             {
-                paging.Row = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                paging.Rows = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
+            paging.Rows = paging.Rows.ToList();
             return paging;
         }
 

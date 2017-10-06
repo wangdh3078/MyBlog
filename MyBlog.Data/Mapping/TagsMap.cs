@@ -12,7 +12,7 @@ namespace MyBlog.Data.Mapping
     {
         public TagsMap()
         {
-
+            Property(t => t.Name).HasMaxLength(64).IsRequired();
         }
     }
 }

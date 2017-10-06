@@ -59,6 +59,18 @@
     <Compile Include="Migrations\201709301449396_changeStruct.Designer.cs">
       <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710040705305_AddNickName.cs" />
+    <Compile Include="Migrations\201710040705305_AddNickName.Designer.cs">
+      <DependentUpon>201710040705305_AddNickName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710060540484_2017100601.cs" />
+    <Compile Include="Migrations\201710060540484_2017100601.Designer.cs">
+      <DependentUpon>201710060540484_2017100601.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710060546581_2017100602.cs" />
+    <Compile Include="Migrations\201710060546581_2017100602.Designer.cs">
+      <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +96,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709301449396_changeStruct.resx">
       <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040705305_AddNickName.resx">
+      <DependentUpon>201710040705305_AddNickName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710060540484_2017100601.resx">
+      <DependentUpon>201710060540484_2017100601.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710060546581_2017100602.resx">
+      <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

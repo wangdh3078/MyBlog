@@ -12,6 +12,8 @@ namespace MyBlog.Data.Mapping
     {
         public BlogMap()
         {
+            Property(t => t.Title).HasMaxLength(100).IsRequired();
+
 
             //设置多对多的关系 .Map()配置用于存储关系的外键列和表。
             /*

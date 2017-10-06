@@ -11,6 +11,11 @@ namespace MyBlog.Entities
         public string LoginName { get; set; }
 
         /// <summary>
+        /// 昵称
+        /// </summary>
+        public string NickName { get; set; }
+
+        /// <summary>
         /// 密码
         /// </summary>
         public string Password { get; set; }

@@ -12,6 +12,11 @@ namespace MyBlog.Data.Mapping
     {
         public UserMap()
         {
+
+            Property(t => t.LoginName).HasMaxLength(64).IsRequired();
+            Property(t => t.NickName).HasMaxLength(64);
+            Property(t => t.Password).HasMaxLength(256).IsRequired();
+            Property(t => t.Email).HasMaxLength(128);
         }
     }
 }

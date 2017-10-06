@@ -10,7 +10,7 @@ namespace MyBlog.Core
     {
         public Paging()
         {
-            Row = new List<T>();
+            Rows = new List<T>();
         }
 
         /// <summary>
@@ -21,6 +21,6 @@ namespace MyBlog.Core
         /// <summary>
         /// 数据集合
         /// </summary>
-        public IEnumerable<T> Row { get; set; }
+        public IEnumerable<T> Rows { get; set; }
     }
 }

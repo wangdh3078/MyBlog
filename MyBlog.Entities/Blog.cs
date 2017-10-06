@@ -40,6 +40,11 @@ namespace MyBlog.Entities
         public DateTime CreateDate { get; set; }
 
         /// <summary>
+        /// 添加人ID
+        /// </summary>
+        public int CreateUserId { get; set; }
+
+        /// <summary>
         /// 发布时间
         /// </summary>
         public DateTime? PublishedDate { get; set; }

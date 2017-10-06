@@ -18,10 +18,10 @@ namespace MyBlog.Services
         public UserService(IRespository<User> userRespository)
         {
             _userRespository = userRespository;
-        } 
+        }
         #endregion
 
-       #region 新增
+        #region 新增
         /// <summary>
         /// 新增用户
         /// </summary>
@@ -96,6 +96,24 @@ namespace MyBlog.Services
         {
             return _userRespository.GetPagingList(pageSize, pageIndex, express);
 
+        }
+        #endregion
+
+        #region 用户登录
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="name">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
+        public User CheckLogin(string name, string password)
+        {
+            password = CryptoHelper.MD5Encrypt(password);
+            User user = new User();
+            user = _userRespository.GetList(t => t.LoginName == name
+                                            & t.Password == password
+                                            & t.IsDisabled == false).FirstOrDefault();
+            return user;
         }
         #endregion
     }
