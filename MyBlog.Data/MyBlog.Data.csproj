@@ -51,33 +51,9 @@
     <Compile Include="Mapping\ClassifyMap.cs" />
     <Compile Include="Mapping\TagsMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
-    <Compile Include="Migrations\201709280342329_InitialMigration.cs" />
-    <Compile Include="Migrations\201709280342329_InitialMigration.Designer.cs">
-      <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709301449396_changeStruct.cs" />
-    <Compile Include="Migrations\201709301449396_changeStruct.Designer.cs">
-      <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710040705305_AddNickName.cs" />
-    <Compile Include="Migrations\201710040705305_AddNickName.Designer.cs">
-      <DependentUpon>201710040705305_AddNickName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710060540484_2017100601.cs" />
-    <Compile Include="Migrations\201710060540484_2017100601.Designer.cs">
-      <DependentUpon>201710060540484_2017100601.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710060546581_2017100602.cs" />
-    <Compile Include="Migrations\201710060546581_2017100602.Designer.cs">
-      <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070317051_2017100701.cs" />
-    <Compile Include="Migrations\201710070317051_2017100701.Designer.cs">
-      <DependentUpon>201710070317051_2017100701.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070345025_2017100702.cs" />
-    <Compile Include="Migrations\201710070345025_2017100702.Designer.cs">
-      <DependentUpon>201710070345025_2017100702.cs</DependentUpon>
+    <Compile Include="Migrations\201710070543459_20171007001.cs" />
+    <Compile Include="Migrations\201710070543459_20171007001.Designer.cs">
+      <DependentUpon>201710070543459_20171007001.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
@@ -99,26 +75,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709280342329_InitialMigration.resx">
-      <DependentUpon>201709280342329_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709301449396_changeStruct.resx">
-      <DependentUpon>201709301449396_changeStruct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710040705305_AddNickName.resx">
-      <DependentUpon>201710040705305_AddNickName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710060540484_2017100601.resx">
-      <DependentUpon>201710060540484_2017100601.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710060546581_2017100602.resx">
-      <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070317051_2017100701.resx">
-      <DependentUpon>201710070317051_2017100701.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070345025_2017100702.resx">
-      <DependentUpon>201710070345025_2017100702.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710070543459_20171007001.resx">
+      <DependentUpon>201710070543459_20171007001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

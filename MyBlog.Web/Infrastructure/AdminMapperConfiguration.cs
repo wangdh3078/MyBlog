@@ -1,12 +1,8 @@
 ﻿using MyBlog.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using AutoMapper;
 using MyBlog.Entities;
 using MyBlog.Web.Areas.Admin.Models;
-using MyBlog.Services;
 
 namespace MyBlog.Web
 {
@@ -23,13 +19,14 @@ namespace MyBlog.Web
             {
                 //Blog
                 cfg.CreateMap<BlogViewModel, Blog>()
-                .ForMember(t=>t.CreateDate, mo => mo.Ignore());
+                .ForMember(t => t.CreateDate, mo => mo.Ignore())
+                .ForMember(t=>t.Classify,mo=>mo.Ignore());
                 cfg.CreateMap<Blog, BlogViewModel>()
                  .ForMember(t => t.CreateDate, mo => mo.Ignore());
 
                 //Classify
                 cfg.CreateMap<ClassifyViewModel, Classify>()
-                .ForMember(t => t.Blogs, mo => mo.Ignore());
+               .ForMember(t => t.Blogs, mo => mo.Ignore());
                 cfg.CreateMap<Classify, ClassifyViewModel>()
                  .ForMember(t => t.Blogs, mo => mo.Ignore());
                 //Tags

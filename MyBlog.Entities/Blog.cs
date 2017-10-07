@@ -12,7 +12,6 @@ namespace MyBlog.Entities
         public Blog()
         {
             Tags = new HashSet<Tags>();
-            Classify = new Classify();
         }
         /// <summary>
         /// 博客标题

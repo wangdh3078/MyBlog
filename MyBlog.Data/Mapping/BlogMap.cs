@@ -23,15 +23,16 @@ namespace MyBlog.Data.Mapping
              * MapRightKey 配置右外键的列名。右外键指向在 WithMany 调用中指定的导航属性的父实体。
              */
 
-            this.HasMany(t => t.Tags)
+            HasMany(t => t.Tags)
                   .WithMany(t => t.Blogs)
                   .Map(m => m.ToTable("BlogTags")
                   .MapLeftKey("BlogId")
                   .MapRightKey("TagId"));
 
-            this.HasRequired(t => t.Classify)
+            HasRequired(t => t.Classify)
                 .WithMany(c => c.Blogs)
-                .HasForeignKey(t => t.ClassifyId);
+                .HasForeignKey(t => t.ClassifyId)
+                .WillCascadeOnDelete(false);
         }
     }
 }
