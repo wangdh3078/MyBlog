@@ -23,6 +23,10 @@ namespace MyBlog.Web.Areas.Admin.Models
         /// 添加时间
         /// </summary>
         public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 添加人ID
+        /// </summary>
+        public int CreateUserId { get; set; }
 
         /// <summary>
         /// 是否已经被删除

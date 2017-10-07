@@ -12,7 +12,7 @@ namespace MyBlog.Data.Mapping
     {
         public ClassifyMap()
         {
-            Property(t => t.Name).HasMaxLength(64).IsRequired();
+            Property(t => t.Name).HasMaxLength(64);
         }
     }
 }

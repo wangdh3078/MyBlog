@@ -16,7 +16,6 @@ namespace MyBlog.Services
             builder.RegisterType<Logger>().As<Logger>().InstancePerLifetimeScope();
             //注册仓储
             builder.RegisterGeneric(typeof(Respository<>)).As(typeof(IRespository<>)).InstancePerLifetimeScope();
-
             //注册用户服务
             builder.RegisterType<UserService>().InstancePerDependency();
 

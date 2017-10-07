@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201710060546581_2017100602.Designer.cs">
       <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710070317051_2017100701.cs" />
+    <Compile Include="Migrations\201710070317051_2017100701.Designer.cs">
+      <DependentUpon>201710070317051_2017100701.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070345025_2017100702.cs" />
+    <Compile Include="Migrations\201710070345025_2017100702.Designer.cs">
+      <DependentUpon>201710070345025_2017100702.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710060546581_2017100602.resx">
       <DependentUpon>201710060546581_2017100602.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070317051_2017100701.resx">
+      <DependentUpon>201710070317051_2017100701.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070345025_2017100702.resx">
+      <DependentUpon>201710070345025_2017100702.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

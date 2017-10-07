@@ -30,7 +30,8 @@ namespace MyBlog.Data.Mapping
                   .MapRightKey("TagId"));
 
             this.HasRequired(t => t.Classify)
-                .WithMany(c => c.Blogs);
+                .WithMany(c => c.Blogs)
+                .HasForeignKey(t => t.ClassifyId);
         }
     }
 }

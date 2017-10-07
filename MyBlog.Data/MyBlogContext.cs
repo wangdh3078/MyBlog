@@ -18,11 +18,13 @@ namespace MyBlog.Data
         public MyBlogContext()
           : base()
         {
+            Configuration.LazyLoadingEnabled = true;
         }
         public MyBlogContext(string nameOrConnectionString= "MyBlogContext")
             : base(nameOrConnectionString)
         {
-        } 
+            Configuration.LazyLoadingEnabled = true;
+        }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

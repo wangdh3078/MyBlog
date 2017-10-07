@@ -118,7 +118,7 @@
         var model = {
             Id: $("#id").val(),
             Title: $("#title").val(),
-            Classify: { id: $("#classify").val() },
+            ClassifyId: $("#classify").val() ,
             Tags: tags,
             ShortContext: article.editor.getMarkdown(),
             Context: article.editor.getHTML(),

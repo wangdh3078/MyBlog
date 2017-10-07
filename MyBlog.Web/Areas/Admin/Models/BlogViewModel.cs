@@ -53,9 +53,14 @@ namespace MyBlog.Web.Areas.Admin.Models
         public List<TagsViewModel> Tags { get; set; }
 
         /// <summary>
-        /// 分类集合
+        /// 分类
         /// </summary>
         public ClassifyViewModel Classify { get; set; }
+
+        /// <summary>
+        /// 分类ID
+        /// </summary>
+        public int ClassifyId { get; set; }
     }
 
 

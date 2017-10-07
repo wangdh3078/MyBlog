@@ -10,10 +10,10 @@ namespace MyBlog.Data
 {
     public class Respository<T> : IRespository<T> where T : BaseEntity
     {
-        private readonly MyBlogContext _context;
-        private readonly Logger _logger;
+        protected readonly MyBlogContext _context;
+        protected readonly Logger _logger;
 
-        private IDbSet<T> _entities;
+        protected IDbSet<T> _entities;
 
         #region 构造函数
         /// <summary>

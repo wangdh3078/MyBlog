@@ -65,8 +65,12 @@ namespace MyBlog.Entities
         public virtual ICollection<Tags> Tags { get; set; }
 
         /// <summary>
-        /// 分类集合
+        /// 分类
         /// </summary>
         public virtual Classify Classify { get; set; }
+        /// <summary>
+        /// 分类ID
+        /// </summary>
+        public int ClassifyId { get; set; }
     }
 }

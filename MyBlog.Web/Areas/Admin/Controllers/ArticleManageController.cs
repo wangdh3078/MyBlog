@@ -88,6 +88,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 {
                     entity = _blogService.GetById(blog.Id);
                 }
+               // blog.Classify = _classifyService.GetById(blog.ClassifyId).ToModel();
                 entity = blog.ToEntity(entity);
                 if (entity.IsPublished)
                 {
@@ -95,7 +96,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 }
                 var tagsIds = entity.Tags.Select(t => t.Id).ToList();
                 entity.Tags = _tagsService.GetList(t => tagsIds.Contains(t.Id)).ToList();
-                entity.Classify = _classifyService.GetById(entity.Classify.Id);
+                //entity.Classify = _classifyService.GetById(entity.ClassifyId);
                 if (blog.Id != 0)
                 {
                     _blogService.Update(entity);
