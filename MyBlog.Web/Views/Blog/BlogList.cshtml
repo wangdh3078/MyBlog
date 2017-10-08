@@ -10,7 +10,7 @@
             <a id="homepage1_HomePageDays_ctl00_DayList_TitleUrl_0" class="postTitle2" href="/Blog/Index/@item.Id">@item.Title</a>
         </div>
         <div class="postCon">
-            @if (item.Context.Length > 100)
+            @if (item.Context.Length > 200)
                 {
                 <div class="c_b_p_desc">
                     @Html.Raw(item.Context.Substring(0, 200))
