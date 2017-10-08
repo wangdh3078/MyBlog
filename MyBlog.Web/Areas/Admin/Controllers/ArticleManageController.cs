@@ -112,6 +112,19 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
+        }
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public JsonResult Delete(List<int> ids)
+        {
+            var success = _blogService.Delete(ids);
+            return Json(new { success = success });
         } 
         #endregion
     }

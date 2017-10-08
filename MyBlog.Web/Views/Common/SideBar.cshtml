@@ -1,13 +1,22 @@
 ﻿@{
     Layout = null;
+    var tags = ViewBag.Tags as List<MyBlog.Entities.Tags>;
+    if (tags == null)
+    {
+        tags = new List<MyBlog.Entities.Tags>();
+    }
+    var classifies = ViewBag.Classifies as List<MyBlog.Entities.Classify>;
+    if (classifies == null)
+    {
+        classifies = new List<MyBlog.Entities.Classify>();
+    }
 }
-
 <div class="panel panel-info">
     <div class="panel-heading">
         <span>公告</span>
     </div>
     <div class="panel-body" style="padding:15px; text-indent:2em  ">
-        <p> </p>
+        <p>暂无公告。。。 </p>
     </div>
 </div>
 <div class="panel panel-info">
@@ -16,9 +25,10 @@
     </div>
     <div class="panel-body">
         <ul class="list-group">
-            <li class="list-group-item">ASP.NET</li>
-            <li class="list-group-item">Bootstrap</li>
-            <li class="list-group-item">Vue</li>
+            @foreach (var item in tags)
+            {
+                <li class="list-group-item"><a href="/Tag/Index/@item.Id">@item.Name</a></li>
+            }
         </ul>
     </div>
 </div>
@@ -28,7 +38,10 @@
     </div>
     <div class="panel-body">
         <ul class="list-group">
-            <li class="list-group-item"><a>ASP.NET</a></li>
+            @foreach (var item in classifies)
+            {
+                <li class="list-group-item"><a href="/Category/Index/@item.Id">@item.Name</a></li>
+            }
         </ul>
     </div>
 </div>

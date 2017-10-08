@@ -1,14 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "关于本站";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
     <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12">
-        <div id="mainContent">
-            <p>
-                出于学习总结和分享的目的建立的个人知识博客，主要方便自己记录查找一些资料。
-            </p>
+        <div style="" id="mainContent">
+            <h4 style="border-bottom:1px solid silver; padding-bottom:4px;">当前标签：@ViewBag.TagName</h4>
         </div>
     </div>
     <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12">
