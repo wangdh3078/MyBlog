@@ -18,6 +18,8 @@ namespace MyBlog.Web.Controllers
 
         public ActionResult Index()
         {
+            var r = HttpContext.Request.Url.Host;
+
             return View();
         }
     }
