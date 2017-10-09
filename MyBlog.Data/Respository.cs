@@ -287,7 +287,7 @@ namespace MyBlog.Data
             paging.Total = entities.Count();
             if (sort == "asc")
             {
-                paging.Rows = entities.OrderBy(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                paging.Rows = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
             else
             {
