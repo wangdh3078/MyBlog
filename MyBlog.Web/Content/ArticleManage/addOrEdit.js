@@ -50,6 +50,7 @@
             },
             onchange: function () {
                 //$("#addOrEditArticl").valid();
+                debugger;
                 article.validator.element("#editormdContent");
             }
         });
