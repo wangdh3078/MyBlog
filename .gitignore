@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /MyBlog.Web/logs
+/MyBlog.Web/FileUpload/2017-10-09
