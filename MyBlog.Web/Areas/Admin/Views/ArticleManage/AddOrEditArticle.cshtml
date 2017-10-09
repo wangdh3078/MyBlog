@@ -11,6 +11,11 @@
 <script src="~/Scripts/plugins/bootstrap-select-1.12.4/dist/js/bootstrap-select.min.js"></script>
 <script src="~/Scripts/plugins/bootstrap-select-1.12.4/js/i18n/defaults-zh_CN.js"></script>
 <script src="~/Scripts/plugins/icheck-1.x/icheck.min.js"></script>
+<style>
+    input[type=submit] {
+        display: none;
+    }
+</style>
 <div class="container-fluid" style="margin-top:40px;">
     <form id="addOrEditArticl">
         @Html.AntiForgeryToken()
@@ -29,7 +34,7 @@
                 <span>分类：</span>
             </div>
             <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-                @Html.Action("CreateSelect", "Common", new { id = "classify", source = ViewBag.Classify, value = "Id", text = "Name", @class = "selectpicker form-control", selectedValue =new int[]{ Model.ClassifyId } })
+                @Html.Action("CreateSelect", "Common", new { id = "classify", source = ViewBag.Classify, value = "Id", text = "Name", @class = "selectpicker form-control", selectedValue = new int[] { Model.ClassifyId } })
             </div>
         </div>
         <div class="row form-group">

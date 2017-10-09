@@ -138,31 +138,37 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#btn_login").click(function () {
-                var name = $("#name").val();
-                var password = $("#password").val();
-                if (!name) {
-                    layer.msg("用户名不能为空");
-                    return;
-                }
-                if (!password) {
-                    layer.msg("密码不能为空");
-                    return;
-                }
-                $.ajax({
-                    url: "/Login/CheckLogin",
-                    type: "POST",
-                    data: { name: name, password: password },
-                    success: function (data) {
-                        if (data.success) {
-                            window.location.href = "/Admin/Home";
-                        } else {
-                            layer.msg(data.message);
-                        }
-                    }
-                })
-            });
+            $("#btn_login").click(login);
         });
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                login();
+            }
+        });
+        function login() {
+            var name = $("#name").val();
+            var password = $("#password").val();
+            if (!name) {
+                layer.msg("用户名不能为空");
+                return;
+            }
+            if (!password) {
+                layer.msg("密码不能为空");
+                return;
+            }
+            $.ajax({
+                url: "/Login/CheckLogin",
+                type: "POST",
+                data: { name: name, password: password },
+                success: function (data) {
+                    if (data.success) {
+                        window.location.href = "/Admin/Home";
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            })
+        }
     </script>
 </body>
 </html>
