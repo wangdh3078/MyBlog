@@ -104,6 +104,7 @@
     },
     /*保存数据*/
     save: function () {
+        debugger;
         if (!$("#addOrEditArticl").valid()) {
             return;
         }
@@ -131,9 +132,9 @@
             type: "POST",
             data: model,
             success: function (data) {
-                if (data.scuuess) {
+                if (data.success) {
                     layer.msg(data.message, { time: 2000 }, function () {
-
+                        window.parent.ArticleManage.refresh();
                     });
                 } else {
                     layer.msg(data.message, { time: 2000 });
