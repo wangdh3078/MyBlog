@@ -49,11 +49,16 @@
   <ItemGroup>
     <Compile Include="Mapping\BlogMap.cs" />
     <Compile Include="Mapping\ClassifyMap.cs" />
+    <Compile Include="Mapping\LogMap.cs" />
     <Compile Include="Mapping\TagsMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Migrations\201710070543459_20171007001.cs" />
     <Compile Include="Migrations\201710070543459_20171007001.Designer.cs">
       <DependentUpon>201710070543459_20171007001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710100923004_AddLog.cs" />
+    <Compile Include="Migrations\201710100923004_AddLog.Designer.cs">
+      <DependentUpon>201710100923004_AddLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
@@ -77,6 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710070543459_20171007001.resx">
       <DependentUpon>201710070543459_20171007001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710100923004_AddLog.resx">
+      <DependentUpon>201710100923004_AddLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

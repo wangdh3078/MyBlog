@@ -168,6 +168,7 @@
     <Compile Include="Areas\Admin\Controllers\ParameterSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagsManageController.cs" />
     <Compile Include="Areas\Admin\Filter\AuthenticationAttribute.cs" />
+    <Compile Include="Areas\Admin\Filter\OperationAttribute.cs" />
     <Compile Include="Areas\Admin\Models\BlogViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ClassifyViewModel.cs" />
     <Compile Include="Areas\Admin\Models\TagsViewModel.cs" />

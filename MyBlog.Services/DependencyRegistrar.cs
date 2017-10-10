@@ -13,7 +13,7 @@ namespace MyBlog.Services
             //注册数据库上下文
             builder.Register(t => new MyBlogContext("MyBlogContext")).InstancePerLifetimeScope();
             //注册日志
-            builder.RegisterType<Logger>().As<Logger>().InstancePerLifetimeScope();
+            builder.RegisterType<LogHelper>().As<LogHelper>().InstancePerLifetimeScope();
             //注册仓储
             builder.RegisterGeneric(typeof(Respository<>)).As(typeof(IRespository<>)).InstancePerLifetimeScope();
             //注册用户服务

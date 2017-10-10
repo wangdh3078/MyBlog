@@ -1,4 +1,5 @@
 ﻿using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MyBlog.Web.Controllers
             _userService = userService;
         }
 
+        [Operation("系统首页")]
         public ActionResult Index()
         {
             var r = HttpContext.Request.Url.Host;

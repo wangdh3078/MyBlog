@@ -83,7 +83,8 @@
     <Compile Include="IDependencyRegistrar.cs" />
     <Compile Include="IMapperConfiguration.cs" />
     <Compile Include="IRespository.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="MyBlogEngine.cs" />
     <Compile Include="Paging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,7 +11,7 @@ namespace MyBlog.Data
     public class Respository<T> : IRespository<T> where T : BaseEntity
     {
         protected readonly MyBlogContext _context;
-        protected readonly Logger _logger;
+        protected readonly LogHelper _logger;
 
         protected IDbSet<T> _entities;
 
@@ -21,7 +21,7 @@ namespace MyBlog.Data
         /// </summary>
         public Respository(
             MyBlogContext context,
-            Logger logger)
+            LogHelper logger)
         {
             _context = context;
             _logger = logger;
