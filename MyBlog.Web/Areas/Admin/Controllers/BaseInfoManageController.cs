@@ -1,5 +1,6 @@
 ﻿using MyBlog.Core;
 using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MyBlog.Web.Areas.Admin.Controllers
 {
+    [Authentication]
     public class BaseInfoManageController : BaseController
     {
         private readonly UserService _userServices;

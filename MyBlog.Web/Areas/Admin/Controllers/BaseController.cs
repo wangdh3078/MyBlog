@@ -1,4 +1,5 @@
 ﻿using MyBlog.Entities;
+using MyBlog.Web.Areas.Admin.Filter;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MyBlog.Web.Areas.Admin.Controllers
 {
+    [Authentication]
     public class BaseController : Controller
     {
         public User CurrentUser

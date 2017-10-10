@@ -1,5 +1,6 @@
 ﻿using MyBlog.Entities;
 using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using MyBlog.Web.Areas.Admin.Models;
 using MyBlog.Web.Extensions;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using WebGrease.Css.Extensions;
 
 namespace MyBlog.Web.Areas.Admin.Controllers
 {
+    [Authentication]
     public class ArticleManageController : BaseController
     {
         private readonly BlogService _blogService;
