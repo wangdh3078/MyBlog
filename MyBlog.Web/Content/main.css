@@ -22,11 +22,6 @@
     margin-left: 1px;
     margin-right: 1px;
 }
-
-    #nav li a.active {
-        background-color: #18BC9D;
-        color: white;
-    }
 /*头部样式结束*/
 footer {
     text-align: center;

@@ -27,18 +27,25 @@
                     <li><a href="/Admin/Login"><i class="fa fa-lock"></i> 登录</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <div class="form-group">
-                                    <input type="text" id="searchKey" class="form-control" placeholder="请输入要搜索的关键字">
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <button type="button" class="btn btn-success" id="btn_search">搜索</button>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="form-group">
+                                <input type="text" id="searchKey" class="form-control" placeholder="请输入要搜索的关键字">
                             </div>
                         </div>
-                    </form>
+                        <div class="col-xs-4">
+                            <button type="button" class="btn btn-success" id="btn_search">搜索</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </header>
+<script type="text/javascript">
+    $(function () {
+        $("#btn_search").click(function () {
+            window.location.href = "/Search/Index/key=" + $("#searchKey").val();
+        })
+    })
+</script>

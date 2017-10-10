@@ -16,7 +16,7 @@ namespace MyBlog.Web.Controllers
             _blogService = blogService;
         }
         // GET: Search
-        public ActionResult Index()
+        public ActionResult Index(string key)
         {
             return View();
         }
