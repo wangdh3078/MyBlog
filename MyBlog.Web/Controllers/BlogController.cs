@@ -1,4 +1,6 @@
-﻿using MyBlog.Services;
+﻿using MyBlog.Entities;
+using MyBlog.Services;
+using MyBlog.Web.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,25 +24,24 @@ namespace MyBlog.Web.Controllers
             return View(blog);
         }
 
-        public ActionResult BlogList()
+        public ActionResult BlogList(List<Blog> list)
         {
-            var blogs = _blogService.GetPagingList(10, 1, t => t.IsPublished == true & t.IsDeleted == false).Rows.ToList();
+            var blogs = new List<Blog>();
+            if (list != null)
+            {
+                blogs = list;
+            }
+            else
+            {
+                blogs = _blogService.GetPagingList(10, 1, t => t.IsPublished == true & t.IsDeleted == false).Rows.ToList();
+            }
             foreach (var blog in blogs)
             {
-                blog.Context = ReplaceHtmlTag(blog.Context);
+                blog.Context = StringHelper.ReplaceHtmlTag(blog.Context);
             }
             return View(blogs);
         }
 
-        public static string ReplaceHtmlTag(string html, int length = 0)
-        {
-            string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
-            strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
 
-            if (length > 0 && strText.Length > length)
-                return strText.Substring(0, length);
-
-            return strText;
-        }
     }
 }

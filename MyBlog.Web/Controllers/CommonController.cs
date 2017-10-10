@@ -12,12 +12,16 @@ namespace MyBlog.Web.Controllers
     {
         private readonly TagsService _tagsService;
         private readonly ClassifyService _classifyService;
+        private readonly BlogService _blogService;
+
         public CommonController(
             TagsService tagsService,
-            ClassifyService classifyService)
+            ClassifyService classifyService,
+            BlogService blogService)
         {
             _tagsService = tagsService;
             _classifyService = classifyService;
+            _blogService = blogService;
         }
         /// <summary>
         /// 顶部导航

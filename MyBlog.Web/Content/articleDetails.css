@@ -11,7 +11,8 @@ h1 {
     width: 100%;
     padding-left: 5px;
     color: #390;
-    text-align:center;
+    text-align: center;
+    margin-bottom: 10px;
 }
 h2 {
     color: #fff;

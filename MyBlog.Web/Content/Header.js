@@ -5,7 +5,13 @@
             $this.addClass("active").parents().siblings().children("a").removeClass("active");
         }
     });
+    $("#search_Key").keydown(function (event) {
+        debugger;
+        if (event.keyCode == 13) {
+            window.location.href = "/Search/Index?key=" + $.trim($("#search_Key").val());
+        }
+    })  
     $("#btn_search").on("click", function () {
-        console.log($("#searchKey").val())
+        window.location.href = "/Search/Index?key=" + $.trim($("#search_Key").val());
     });
 })

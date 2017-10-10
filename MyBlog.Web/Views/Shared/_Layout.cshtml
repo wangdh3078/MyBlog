@@ -5,13 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - 我的Blog</title>
+    <link href="~/Scripts/plugins/layui-v2.1.5/layui/css/layui.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/plugins/layui-v2.1.5/layui/layui.js"></script>
     <script src="~/Content/Header.js"></script>
 </head>
-<body>
+<body id="body">
     @Html.Action("Header", "Common")
     <div class="container body-content">
         @RenderBody()

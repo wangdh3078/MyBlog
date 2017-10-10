@@ -3,10 +3,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<input type="hidden" id="categoryId" value="@ViewBag.Id" />
 <div class="row">
     <div class="col-lg-9  col-md-9 col-sm-9 col-xs-12">
         <div style="" id="mainContent">
-            <h4 style="border-bottom:1px solid silver; padding-bottom:4px;">当前分类：@ViewBag.CategoryName</h4>
+            <h4 style="border-bottom:1px solid silver; padding-bottom:4px; margin-bottom: 10px">当前分类：@ViewBag.CategoryName</h4>
+            <div id="categoryConetnt">
+                @Html.Action("BlogList", "Blog", new { list = ViewBag.Blogs })
+            </div>
+            <div id="paging" style="text-align:center;">
+            </div>
         </div>
     </div>
     <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12">
@@ -15,3 +21,28 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'paging', //注意，这里的 test1 是 ID，不用加 # 号
+            count: @ViewBag.Count, //数据总数，从服务端得到
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+            jump: function (obj, first) {
+                if (!first) {
+                    $.ajax({
+                        url: "/Category/GetPaging?id=" + $("#categoryId").val() + "&pageIndex=" + obj.curr + "&pageSize=" + obj.limit,
+                        success: function (data)
+                        {
+                            $("#categoryConetnt").empty().append(data);
+                        },
+                        error: function (data) {
+
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
