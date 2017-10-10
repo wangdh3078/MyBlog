@@ -56,7 +56,7 @@ namespace MyBlog.Services
         #endregion
 
         #region 修改
-        public Blog Update(Blog blog)
+        public bool Update(Blog blog)
         {
             return _blogRespoistory.Update(blog);
         }

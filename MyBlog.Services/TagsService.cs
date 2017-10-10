@@ -55,7 +55,7 @@ namespace MyBlog.Services
         #endregion
 
         #region 修改
-        public Tags Update(Tags tags)
+        public bool Update(Tags tags)
         {
             return _tagsRespoistory.Update(tags);
         }

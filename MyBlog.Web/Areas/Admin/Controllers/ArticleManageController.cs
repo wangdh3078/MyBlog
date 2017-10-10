@@ -41,7 +41,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public string GetPagingData(int pageSize, int pageNumber, string title)
         {
-            var data = _blogService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(title) ? true : t.Title.Contains(title)) & t.IsDeleted == false);
+            var data = _blogService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(title) ? true : t.Title.Contains(title)) & t.IsDeleted == false & t.CreateUserId == CurrentUser.Id);
             JsonSerializerSettings setting = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -65,8 +65,8 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 var entity = _blogService.GetById(id.Value);
                 model = entity.ToModel();
             }
-            ViewBag.Tags = _tagsService.GetList(t => t.IsDeleted == false);
-            ViewBag.Classify = _classifyService.GetList(t => t.IsDeleted == false);
+            ViewBag.Tags = _tagsService.GetList(t => t.IsDeleted == false & t.CreateUserId == CurrentUser.Id);
+            ViewBag.Classify = _classifyService.GetList(t => t.IsDeleted == false & t.CreateUserId == CurrentUser.Id);
             return View(model);
         }
 

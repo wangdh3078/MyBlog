@@ -70,7 +70,7 @@ namespace MyBlog.Core
         /// </summary>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        T Update(T entity);
+        bool Update(T entity);
 
         /// <summary>
         /// 批量修改

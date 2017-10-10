@@ -55,7 +55,7 @@ namespace MyBlog.Services
         #endregion
 
         #region 修改
-        public Classify Update(Classify classify)
+        public bool Update(Classify classify)
         {
             return _classifyRespoistory.Update(classify);
         }

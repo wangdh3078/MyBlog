@@ -45,6 +45,8 @@ namespace MyBlog.Services
             return _userRespository.Delete(id);
         }
 
+
+
         /// <summary>
         /// 根据ID集合批量删除
         /// </summary>
@@ -58,7 +60,7 @@ namespace MyBlog.Services
         #endregion
 
         #region 修改
-        public User Update(User user)
+        public bool Update(User user)
         {
             return _userRespository.Update(user);
         }
@@ -116,5 +118,7 @@ namespace MyBlog.Services
             return user;
         }
         #endregion
+
+      
     }
 }

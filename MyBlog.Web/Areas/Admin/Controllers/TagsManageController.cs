@@ -36,7 +36,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public string GetPagingData(int pageSize, int pageNumber, string name)
         {
-            var data = _tagsService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(name) ? true : t.Name.Contains(name)) & t.IsDeleted == false);
+            var data = _tagsService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(name) ? true : t.Name.Contains(name)) & t.IsDeleted == false );
             JsonSerializerSettings setting = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

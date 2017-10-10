@@ -200,17 +200,17 @@ namespace MyBlog.Data
         /// </summary>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        public T Update(T entity)
+        public bool Update(T entity)
         {
             try
             {
                 _context.SaveChanges();
-                return entity;
+                return true;
             }
             catch (DbEntityValidationException ex)
             {
                 _logger.Error(GetFullErrorText(ex));
-                return null;
+                return false;
             }
         }
 
@@ -267,7 +267,7 @@ namespace MyBlog.Data
             Paging<T> paging = new Paging<T>();
             var entities = Entities.Where(express);
             paging.Total = entities.Count();
-            paging.Rows = entities.OrderByDescending(t =>t.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            paging.Rows = entities.OrderByDescending(t => t.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return paging;
         }
 
