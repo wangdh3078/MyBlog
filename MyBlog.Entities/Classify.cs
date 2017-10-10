@@ -20,11 +20,6 @@ namespace MyBlog.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// 添加时间
-        /// </summary>
-        public DateTime CreateDate { get; set; }
-
-        /// <summary>
         /// 添加人ID
         /// </summary>
         public int CreateUserId { get; set; }

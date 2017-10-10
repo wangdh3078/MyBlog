@@ -73,6 +73,7 @@
     /*验证*/
     valid: function () {
         article.validator = $("#addOrEditArticl").validate({
+            onsubmit: false,
             rules: {
                 title: "required",
                 classify: {
@@ -118,7 +119,7 @@
         var model = {
             Id: $("#id").val(),
             Title: $("#title").val(),
-            ClassifyId: $("#classify").val() ,
+            ClassifyId: $("#classify").val(),
             Tags: tags,
             ShortContext: article.editor.getMarkdown(),
             Context: article.editor.getHTML(),

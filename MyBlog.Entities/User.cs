@@ -26,11 +26,6 @@ namespace MyBlog.Entities
         public string Email { get; set; }
 
         /// <summary>
-        /// 添加时间
-        /// </summary>
-        public DateTime CreateDate { get; set; }
-
-        /// <summary>
         /// 是否被禁用
         /// </summary>
         public bool IsDisabled { get; set; }

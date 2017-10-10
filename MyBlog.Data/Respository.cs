@@ -267,7 +267,7 @@ namespace MyBlog.Data
             Paging<T> paging = new Paging<T>();
             var entities = Entities.Where(express);
             paging.Total = entities.Count();
-            paging.Rows = entities.OrderByDescending(t => "CreateDate").Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            paging.Rows = entities.OrderByDescending(t =>t.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return paging;
         }
 
@@ -278,20 +278,19 @@ namespace MyBlog.Data
         /// <param name="pageIndex">当前页索引</param>
         /// <param name="express">查询条件</param>
         /// <param name="sort">排序方式 默认 desc </param>
-        /// <param name="sortColumn">排序字段 默认  CreateDate</param>
         /// <returns></returns>
-        public Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express, string sort = "desc", string sortColumn = "CreateDate")
+        public Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express, string sort = "desc")
         {
             Paging<T> paging = new Paging<T>();
             var entities = Entities.Where(express);
             paging.Total = entities.Count();
             if (sort == "asc")
             {
-                paging.Rows = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                paging.Rows = entities.OrderBy(t => t.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
             else
             {
-                paging.Rows = entities.OrderByDescending(t => sortColumn).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                paging.Rows = entities.OrderByDescending(t => t.CreateDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
             paging.Rows = paging.Rows.ToList();
             return paging;

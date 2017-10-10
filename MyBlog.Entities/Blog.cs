@@ -33,10 +33,7 @@ namespace MyBlog.Entities
         /// </summary>
         public int Author { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreateDate { get; set; }
+     
 
         /// <summary>
         /// 添加人ID

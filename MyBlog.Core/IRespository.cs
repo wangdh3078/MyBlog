@@ -109,9 +109,8 @@ namespace MyBlog.Core
         /// <param name="pageIndex">当前页索引</param>
         /// <param name="express">查询条件</param>
         /// <param name="sort">排序方式 默认 desc </param>
-        /// <param name="sortColumn">排序字段 默认  CreateDate</param>
         /// <returns></returns>
-        Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express, string sort = "desc", string sortColumn = "CreateDate");
+        Paging<T> GetPagingList(int pageSize, int pageIndex, Expression<Func<T, bool>> express, string sort = "desc");
 
         /// <summary>
         /// 获取表
