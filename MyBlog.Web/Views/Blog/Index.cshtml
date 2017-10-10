@@ -10,8 +10,14 @@
             <h1>@Model.Title</h1>
             @Html.Raw(Model.Context)
             <hr />
-            <div id="BlogPostCategory">分类: <a href="/" target="_blank">EF</a></div>
-            <div id="EntryTag">标签: <a href="/">EF</a></div>
+            <div id="BlogPostCategory">分类: <a href="/Category/Index/@Model.ClassifyId" target="_blank">@Model.Classify.Name</a></div>
+            <div id="EntryTag">
+                标签:
+                @foreach (var item in Model.Tags)
+                {
+                    <a href="/Tag/Index/@item.Id" target="_blank">@item.Name</a>
+                }
+            </div>
         </div>
     </div>
     <div class="col-lg-3  col-md-3 col-sm-3 col-xs-12">

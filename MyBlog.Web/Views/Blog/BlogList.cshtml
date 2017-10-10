@@ -28,7 +28,7 @@
                 }
             </div>
             <div class="clear"></div>
-            <div class="postDesc">发布时间 @item.PublishedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")  分类  @item.Classify.Name </div>
+            <div class="postDesc">发布时间 @item.PublishedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")  分类 <a href="/Category/Index/@item.ClassifyId" target="_blank">@item.Classify.Name</a>   </div>
             <div class="clear"></div>
             <div class="postSeparator"></div>
         </div>
