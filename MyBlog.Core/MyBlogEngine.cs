@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using AutoMapper;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace MyBlog.Core
             {
                 dependencyRegistrar.Register(builder);
             }
-
+            builder.RegisterType<Logger>().As<Logger>().InstancePerLifetimeScope();
             var container = builder.Build();
             //设置依赖解析器
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
