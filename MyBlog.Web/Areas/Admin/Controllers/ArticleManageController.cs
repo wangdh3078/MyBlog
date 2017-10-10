@@ -96,6 +96,8 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 var tagsIds = entity.Tags.Select(t => t.Id).ToList();
                 entity.Tags = _tagsService.GetList(t => tagsIds.Contains(t.Id)).ToList();
                 entity.Classify = _classifyService.GetById(entity.ClassifyId);
+                entity.Author = CurrentUser.Id;
+                entity.CreateUserId = CurrentUser.Id;
                 if (blog.Id != 0)
                 {
                     _blogService.Update(entity);
@@ -103,7 +105,6 @@ namespace MyBlog.Web.Areas.Admin.Controllers
                 else
                 {
                     entity.CreateDate = DateTime.Now;
-                    entity.Author = CurrentUser.Id;
                     _blogService.Add(entity);
                 }
                 return Json(new { success = true, message = "保存成功" });
@@ -125,7 +126,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         {
             var success = _blogService.Delete(ids);
             return Json(new { success = success });
-        } 
+        }
         #endregion
     }
 }
