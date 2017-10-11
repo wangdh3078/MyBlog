@@ -11,7 +11,7 @@ var config = {
   articleListUrl: `${protocol}://${host}/api/Article`,
 
   // 文章详情地址
-  articleDetailesUrl: `${protocol}://${host}/api/Article/get/`,
+  articleDetailesUrl: `${protocol}://${host}/api/Article/get`,
 };
 
 module.exports = config

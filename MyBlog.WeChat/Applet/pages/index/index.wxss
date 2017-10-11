@@ -4,9 +4,13 @@
 }
 .article{
   margin-top: 20rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 10rpx;
   border-bottom: 1px dotted #666;
 }
 .title{
  font-size: 18px;
+ margin-bottom: 10rpx;
+}
+.time{
+  margin-top:10rpx;
 }
