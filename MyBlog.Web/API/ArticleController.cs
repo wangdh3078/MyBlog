@@ -1,5 +1,7 @@
-﻿using MyBlog.Entities;
+﻿using MyBlog.Core;
+using MyBlog.Entities;
 using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +30,11 @@ namespace MyBlog.Web.API
         /// 获取列表
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Blog> Get()
+        public IEnumerable<BlogViewModel> Get()
         {
-            return _blogService.GetList(t => true).ToList();
+            var blogs = _blogService.GetList(t => true).ToList();
+            var data = AutoMapperConfiguration.Mapper.Map<List<Blog>, List<BlogViewModel>>(blogs);
+            return data;
         }
     }
 }
