@@ -29,12 +29,18 @@ namespace MyBlog.Web.API
         /// <summary>
         /// 获取列表
         /// </summary>
+        /// <param name="pageIndex">当前页</param>
+        /// <param name="pageSize">每页大小</param>
+        /// <param name="name">搜索关键字</param>
         /// <returns></returns>
-        public IEnumerable<BlogViewModel> Get()
+        public Paging<BlogViewModel> Get(int pageIndex, int pageSize = 1, string name = "")
         {
-            var blogs = _blogService.GetList(t => true).ToList();
-            var data = AutoMapperConfiguration.Mapper.Map<List<Blog>, List<BlogViewModel>>(blogs);
-            return data;
+            var result = new Paging<BlogViewModel>();
+            var blogs = _blogService.GetPagingList(pageSize, pageIndex, t => string.IsNullOrEmpty(name) ? true : t.Title.Contains(name));
+            var data = AutoMapperConfiguration.Mapper.Map<List<Blog>, List<BlogViewModel>>(blogs.Rows.ToList());
+            result.Rows = data;
+            result.Total = blogs.Total;
+            return result;
         }
     }
 }
