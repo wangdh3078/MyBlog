@@ -46,7 +46,7 @@ namespace MyBlog.Web.API
                 data.Add(new APIBlogModel
                 {
                     Author = item.Author,
-                    Context = StringHelper.ReplaceHtmlTag(item.Context, 120),
+                    Context = StringHelper.ReplaceHtmlTag(item.Context, 80),
                     Id = item.Id,
                     PublishedDate = item.PublishedDate,
                     Title = item.Title

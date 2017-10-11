@@ -1,1 +1,5 @@
 /* pages/articleDetails/index.wxss */
+@import "/wxParse/wxParse.wxss";
+.content{
+  width: 90%;
+}

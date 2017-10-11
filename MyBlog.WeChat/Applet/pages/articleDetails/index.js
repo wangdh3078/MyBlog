@@ -1,18 +1,32 @@
 // pages/articleDetails/index.js
+const articleDetailesUrl = require('../../config').articleDetailesUrl;
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+   article:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this;
+    wx.request({
+      url: articleDetailesUrl, 
+      data: {
+        id: options.id,
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          article: res.data
+        });
+      }
+    })
   },
 
   /**

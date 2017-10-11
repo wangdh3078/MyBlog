@@ -52,6 +52,10 @@
     <Compile Include="Mapping\LogMap.cs" />
     <Compile Include="Mapping\TagsMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
+    <Compile Include="Migrations\201710111400196_2017101101.cs" />
+    <Compile Include="Migrations\201710111400196_2017101101.Designer.cs">
+      <DependentUpon>201710111400196_2017101101.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyBlogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +74,11 @@
       <Project>{DBF6CEA9-C98B-4A06-96D4-8087ABACE7BB}</Project>
       <Name>MyBlog.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710111400196_2017101101.resx">
+      <DependentUpon>201710111400196_2017101101.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,14 @@
 <!--index.wxml-->
 <view class="container">
-  <view wx:for="{{articles}}" wx:key="*this" class='article' id='{{item.Id}}'>
+  <view wx:for="{{articles}}" wx:key="*this" class='article' data-id='{{item.Id}}' bindtap="jump">
     <view class='title'>
       <navigator url="/pages/articleDetails/index?id={{item.Id}}"> {{item.Title}}</navigator>
     </view>
     <view class='content'>
-      {{item.Content}}
+      {{item.Context}}
     </view>
     <view  class='time' >
-      <icon type="waiting" color="gray" size='14' />
+      <icon type="waiting" color="rgb(184,247,136)" size='16' />
      <label style='font-size:12px;'> {{item.PublishedDate}}</label>
     </view>
   </view>
