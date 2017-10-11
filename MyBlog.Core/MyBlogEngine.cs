@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using AutoMapper;
 using NLog;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace MyBlog.Core
@@ -63,6 +65,12 @@ namespace MyBlog.Core
             }
             builder.RegisterType<Logger>().As<Logger>().InstancePerLifetimeScope();
             var container = builder.Build();
+
+            //设置API解析
+            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+            builder.RegisterWebApiModelBinderProvider();
+            var webApiResolver = new AutofacWebApiDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = webApiResolver;
             //设置依赖解析器
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
@@ -92,7 +100,7 @@ namespace MyBlog.Core
                 configurationActions.Add(mc.GetConfiguration());
             //register
             AutoMapperConfiguration.Init(configurationActions);
-        } 
+        }
         #endregion
     }
 }

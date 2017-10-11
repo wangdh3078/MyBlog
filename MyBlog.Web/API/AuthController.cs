@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace MyBlog.Web.Controllers
 {
     /// <summary>
-    /// 
+    /// 权限验证
     /// </summary>
     public class AuthController : ApiController
     {
