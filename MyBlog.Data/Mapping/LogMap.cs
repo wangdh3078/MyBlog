@@ -12,7 +12,12 @@ namespace MyBlog.Data.Mapping
     {
         public LogMap()
         {
-
+            Ignore(t => t.LogLevel);
+            Property(t => t.Level).HasMaxLength(32);
+            Property(t => t.UserName).HasMaxLength(64);
+            Property(t => t.OperationType).HasMaxLength(64);
+            Property(t => t.IP).HasMaxLength(128);
+            Property(t => t.Module).HasMaxLength(128);
         }
     }
 }

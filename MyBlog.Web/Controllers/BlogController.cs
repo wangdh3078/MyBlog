@@ -1,5 +1,6 @@
 ﻿using MyBlog.Entities;
 using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using MyBlog.Web.Helper;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MyBlog.Web.Controllers
             _blogService = blogService;
         }
         // GET: BlogDetails
+        [Operation("查看博客")]
         public ActionResult Index(int id)
         {
             var blog = _blogService.GetById(id);

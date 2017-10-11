@@ -12,9 +12,9 @@ namespace MyBlog.Core
         {
             _logger = logger;
         }
-         
-        public LogHelper(string name)
-            : this(LogManager.GetLogger(name))
+
+        public LogHelper()
+            : this(LogManager.GetLogger("MyBlog"))
         {
 
         }
@@ -61,17 +61,17 @@ namespace MyBlog.Core
         public void Process(Log log)
         {
             var level = LogLevel.Info;
-            if (log.Level == ELogLevel.Trace)
+            if (log.LogLevel == ELogLevel.Trace)
                 level = LogLevel.Trace;
-            else if (log.Level == ELogLevel.Debug)
+            else if (log.LogLevel == ELogLevel.Debug)
                 level = LogLevel.Debug;
-            else if (log.Level == ELogLevel.Info)
+            else if (log.LogLevel == ELogLevel.Info)
                 level = LogLevel.Info;
-            else if (log.Level == ELogLevel.Warn)
+            else if (log.LogLevel == ELogLevel.Warn)
                 level = LogLevel.Warn;
-            else if (log.Level == ELogLevel.Error)
+            else if (log.LogLevel == ELogLevel.Error)
                 level = LogLevel.Error;
-            else if (log.Level == ELogLevel.Fatal)
+            else if (log.LogLevel == ELogLevel.Fatal)
                 level = LogLevel.Fatal;
 
             var theEvent = new LogEventInfo(level, _logger.Name, log.Message);

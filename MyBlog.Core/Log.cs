@@ -11,7 +11,7 @@ namespace MyBlog.Core
     {
         public Log(ELogLevel level, string message, string operationType, string module, string ip, int userId, string userName = "")
         {
-            Level = level;
+            LogLevel = level;
             Message = message;
             UserId = userId;
             UserName = userName;
@@ -23,11 +23,12 @@ namespace MyBlog.Core
         /// <summary>
         /// 日志级别 Trace|Debug|Info|Warn|Error|Fatal 
         /// </summary>
-        public ELogLevel Level { get; set; }
+        public ELogLevel LogLevel { get; set; }
+
         /// <summary>
-        /// 日志消息
+        /// 日志级别 存到数据库为字符串
         /// </summary>
-        public string Message { get; set; }
+        public string Level { get; set; }
         /// <summary>
         /// 用户ID
         /// </summary>
@@ -37,6 +38,10 @@ namespace MyBlog.Core
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
+        /// 日志消息
+        /// </summary>
+        public string Message { get; set; }
+        /// <summary>
         /// 操作类型
         /// </summary>
         public string OperationType { get; set; }
@@ -44,10 +49,6 @@ namespace MyBlog.Core
         /// 操作模块
         /// </summary>
         public string Module { get; set; }
-        /// <summary>
-        /// 操作时间
-        /// </summary>
-        public DateTime OperationDate { get; set; }
         /// <summary>
         /// IP地址
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using MyBlog.Core;
 using MyBlog.Entities;
 using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using MyBlog.Web.Helper;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace MyBlog.Web.Controllers
             _blogService = blogService;
         }
         // GET: Category
+        [Operation("查看分类")]
         public ActionResult Index(int? id)
         {
             var blogs = new List<Blog>();

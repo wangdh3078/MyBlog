@@ -53,12 +53,18 @@ namespace MyBlog.Web.Areas.Admin.Filter
             }
             ActionParameters = parameters.ToString();
             //登录用户
-            User account = JsonConvert.DeserializeObject<User>(filterContext.HttpContext.Session["user"].ToString());
-
+            User account = new User();
+            if (filterContext.HttpContext.Session["user"] == null)
+            {
+                account.LoginName = "未登录用户";
+            }
+            else
+            {
+                account = JsonConvert.DeserializeObject<User>(filterContext.HttpContext.Session["user"].ToString());
+            }
             string ip = GetCurrentIpAddress();
-
             LogHelper.Logger.Process(new Log(ELogLevel.Info, OperationSummary, ActionName, ControllerName, ip, account.Id, account.LoginName));
-            // LogHelper.Logger.Flush();
+            //LogHelper.Logger.Flush();
         }
 
         private string GetCurrentIpAddress()

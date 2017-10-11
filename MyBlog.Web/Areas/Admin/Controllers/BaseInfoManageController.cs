@@ -22,7 +22,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         {
             return View();
         }
-
+        [Operation("后台-修改密码")]
         public JsonResult ModifyPassword(string oldPassword, string newPassword)
         {
             bool success = true;

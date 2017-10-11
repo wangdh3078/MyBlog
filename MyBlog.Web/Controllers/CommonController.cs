@@ -1,4 +1,5 @@
 ﻿using MyBlog.Services;
+using MyBlog.Web.Areas.Admin.Filter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,6 +50,7 @@ namespace MyBlog.Web.Controllers
         /// </summary>
         /// <param name="file">文件</param>
         /// <returns></returns>
+        [Operation("上传文件")]
         public JsonResult FileUpload()
         {
             try

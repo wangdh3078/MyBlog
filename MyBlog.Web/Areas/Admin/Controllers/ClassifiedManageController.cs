@@ -28,6 +28,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// 分类列表页面
         /// </summary>
         /// <returns></returns>
+        [Operation("后台-分类列表")]
         public ActionResult Index()
         {
             return View();
@@ -58,6 +59,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">分类ID</param>
         /// <returns></returns>
+        [Operation("后台-添加或编辑分类")]
         public ActionResult AddOrEdit(int? id)
         {
             Classify classify = new Classify();
@@ -69,6 +71,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Operation("后台-保存分类")]
         public JsonResult AddOrEdit(Classify entity)
         {
             bool success = false;
@@ -117,6 +120,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         #endregion
 
         #region 删除
+        [Operation("后台-删除分类")]
         public JsonResult Delete(List<int> ids)
         {
             bool success = false;

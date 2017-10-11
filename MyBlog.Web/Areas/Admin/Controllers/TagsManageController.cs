@@ -24,6 +24,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             _tagsService = tagsService;
         }
         // GET: Admin/TagsManage
+        [Operation("后台-标签列表")]
         public ActionResult Index()
         {
             return View();
@@ -38,7 +39,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public string GetPagingData(int pageSize, int pageNumber, string name)
         {
-            var data = _tagsService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(name) ? true : t.Name.Contains(name)) & t.IsDeleted == false );
+            var data = _tagsService.GetPagingList(pageSize, pageNumber, t => (string.IsNullOrEmpty(name) ? true : t.Name.Contains(name)) & t.IsDeleted == false);
             JsonSerializerSettings setting = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -48,12 +49,13 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             return ret;
         }
 
-        #region 添加或编辑分类
+        #region 添加或编辑标签
         /// <summary>
-        /// 添加或编辑分类
+        /// 添加或编辑标签
         /// </summary>
         /// <param name="id">分类ID</param>
         /// <returns></returns>
+        [Operation("后台-添加或编辑标签")]
         public ActionResult AddOrEdit(int? id)
         {
             Tags tag = new Tags();
@@ -65,6 +67,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Operation("后台-保存标签")]
         public JsonResult AddOrEdit(Tags entity)
         {
             bool success = false;
@@ -113,6 +116,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         #endregion
 
         #region 删除
+        [Operation("后台-删除标签")]
         public JsonResult Delete(List<int> ids)
         {
             bool success = false;

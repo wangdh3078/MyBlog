@@ -1,4 +1,5 @@
-﻿using MyBlog.Services;
+﻿using MyBlog.Core;
+using MyBlog.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,12 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             {
                 success = true;
                 Session["user"] = JsonConvert.SerializeObject(user);
+                var ip = HttpContext.Request.UserHostAddress;
+                if (ip == "::1")
+                {
+                    ip = "127.0.0.1";
+                }
+                LogHelper.Logger.Process(new Log(ELogLevel.Info, "登陆成功", "Login", "Login", ip, user.Id, user.LoginName));
             }
             else
             {

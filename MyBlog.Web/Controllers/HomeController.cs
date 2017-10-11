@@ -20,8 +20,6 @@ namespace MyBlog.Web.Controllers
         [Operation("系统首页")]
         public ActionResult Index()
         {
-            var r = HttpContext.Request.Url.Host;
-
             return View();
         }
     }

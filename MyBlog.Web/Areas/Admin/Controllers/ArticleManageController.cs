@@ -30,6 +30,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
             _tagsService = tagsService;
         }
         // GET: Admin/ArticleManage
+        [Operation("后台-文章列表")]
         public ActionResult Index()
         {
             return View();
@@ -59,6 +60,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Operation("后台-添加或编辑文章")]
         public ActionResult AddOrEditArticle(int? id)
         {
             BlogViewModel model = new BlogViewModel();
@@ -81,6 +83,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
+        [Operation("后台-保存文章")]
         public JsonResult AddOrEditArticle(BlogViewModel blog)
         {
             Blog entity = new Blog();
@@ -124,6 +127,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
+        [Operation("后台-删除文章")]
         public JsonResult Delete(List<int> ids)
         {
             var success = _blogService.Delete(ids);
