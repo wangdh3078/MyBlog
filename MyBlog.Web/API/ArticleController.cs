@@ -1,7 +1,10 @@
 ﻿using MyBlog.Core;
 using MyBlog.Entities;
 using MyBlog.Services;
+using MyBlog.Web.API.Models;
 using MyBlog.Web.Areas.Admin.Models;
+using MyBlog.Web.Extensions;
+using MyBlog.Web.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +36,34 @@ namespace MyBlog.Web.API
         /// <param name="pageSize">每页大小</param>
         /// <param name="name">搜索关键字</param>
         /// <returns></returns>
-        public Paging<BlogViewModel> Get(int pageIndex, int pageSize = 1, string name = "")
+        public Paging<APIBlogModel> Get(int pageIndex, int pageSize = 10, string name = "")
         {
-            var result = new Paging<BlogViewModel>();
+            var result = new Paging<APIBlogModel>();
             var blogs = _blogService.GetPagingList(pageSize, pageIndex, t => string.IsNullOrEmpty(name) ? true : t.Title.Contains(name));
-            var data = AutoMapperConfiguration.Mapper.Map<List<Blog>, List<BlogViewModel>>(blogs.Rows.ToList());
+            var data = new List<APIBlogModel>();
+            foreach (var item in blogs.Rows)
+            {
+                data.Add(new APIBlogModel
+                {
+                    Author = item.Author,
+                    Context = StringHelper.ReplaceHtmlTag(item.Context, 120),
+                    Id = item.Id,
+                    PublishedDate = item.PublishedDate,
+                    Title = item.Title
+                });
+            }
             result.Rows = data;
             result.Total = blogs.Total;
             return result;
+        }
+        /// <summary>
+        /// 获取博客详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public BlogViewModel Get(int id)
+        {
+            return _blogService.GetById(id).ToModel();
         }
     }
 }

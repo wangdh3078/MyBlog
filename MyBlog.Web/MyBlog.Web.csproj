@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="API\ArticleController.cs" />
     <Compile Include="API\AuthController.cs" />
+    <Compile Include="API\Models\APIBlogModel.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
