@@ -2,4 +2,9 @@
 @import "/wxParse/wxParse.wxss";
 .content{
   width: 90%;
+  margin-bottom: 20px;
+}
+.title{
+  width: 98%;
+  text-align: center;
 }

@@ -1,7 +1,7 @@
-//var host = "wangdahu.top";
-//var protocol = "https";
-var host = "localhost:51484";
-var protocol="http";
+var host = "wangdahu.top";
+var protocol = "https";
+//var host = "localhost:51484";
+//var protocol="http";
 var config = {
 
   // 下面的地址配合云端 Server 工作
