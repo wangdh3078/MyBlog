@@ -24,6 +24,7 @@ Page({
         id: options.id,
       },
       success: function (res) {
+        console.log(res.data)
         that.setData({
           article: res.data,
           Context: WxParse.wxParse('Context', 'html', res.data.Context, that, 5)

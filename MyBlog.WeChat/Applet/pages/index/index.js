@@ -4,18 +4,18 @@ const app = getApp();
 const articleListUrl = require('../../config').articleListUrl;
 Page({
   data: {
-    articles:[],
-    pageIndex:1,
-    name:''
+    articles: [],
+    pageIndex: 1,
+    name: ''
   },
   onLoad: function () {
     app.showLoading();
     this.loadData();
   },
-  loadData:function(){
-    var that=this;
+  loadData: function () {
+    var that = this;
     wx.request({
-      url: articleListUrl, 
+      url: articleListUrl,
       data: {
         pageIndex: that.data.pageIndex,
         name: ''
@@ -26,10 +26,18 @@ Page({
           articles: res.data.Rows
         });
         app.cancelLoading();
+      },
+      fail: function (data) {
+        console.log('请求失败：');
+        console.log(data)
+      },
+      complete:function(data){
+        console.log('请求完成：');
+        console.log(data)
       }
     });
   },
-  jump: function (event){
+  jump: function (event) {
     wx.navigateTo({
       url: '/pages/articleDetails/index?id=' + event.currentTarget.dataset.id
     });
