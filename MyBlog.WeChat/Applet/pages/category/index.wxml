@@ -1,5 +1,5 @@
-<view clsaa='container'>
-  <block wx:for-items="{{category}}"  wx:key="*this">
+<view class='container'>
+  <block wx:for-items="{{category}}" wx:key="*this">
     <navigator url="/pages/categoryArticles/index?id={{item.Id}}&name={{item.Name}}" class="navigator">
       <view class="navigator-text">{{item.Name}}</view>
       <view class="navigator-arrow"></view>

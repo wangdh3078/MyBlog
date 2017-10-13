@@ -1,13 +1,9 @@
-.container{
-  padding-left: 20rpx;
-  padding-right: 20rpx;
-}
-
 .navigator {
   padding: 20rpx 30rpx;
   position: relative;
   display: flex;
   align-items: center;
+  background:#F0F8FF;
 }
 .navigator:before {
   content: " ";

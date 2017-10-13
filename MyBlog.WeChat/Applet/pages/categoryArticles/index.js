@@ -116,7 +116,6 @@ Page({
         console.log(data)
       },
       complete: function (data) {
-        console.log('请求完成');
       }
     });
   },

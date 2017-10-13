@@ -3,6 +3,7 @@
 .content{
   width: 90%;
   margin-bottom: 20px;
+  margin-left:5%;
 }
 .title{
   width: 98%;

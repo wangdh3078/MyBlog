@@ -1,7 +1,7 @@
 <view class="search">
   <view class="search-result">
     <scroll-view class="container" scroll-y="true" bindscrolltolower="searchScrollLower">
-      <view wx:for="{{articles}}" wx:key="*this" class='article' data-id='{{item.Id}}' bindtap="jump">
+      <view wx:for="{{articles}}" wx:key="unique" class='article' data-id='{{item.Id}}' bindtap="jump">
         <view class='title'>
           {{item.Title}}
         </view>
