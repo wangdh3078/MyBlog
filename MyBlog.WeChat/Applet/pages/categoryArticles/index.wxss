@@ -1,3 +1,4 @@
+/* pages/categoryArticles/index.wxss */
 /* pages/category/index.wxss */
 
 page {
@@ -19,43 +20,6 @@ page {
   flex-direction: column;
   background: #fff;
 }
-
-.search-bar {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20rpx;
-  background: #f4f4f4;
-}
-
-.search-wrap {
-  position: relative;
-  flex: auto;
-  display: flex;
-  align-items: center;
-  height: 80rpx;
-  padding: 0 20rpx;
-  background: #fff;
-  border-radius: 6rpx;
-}
-
-.search-wrap .icon-search {
-  margin-right: 10rpx;
-}
-
-.search-wrap .search-input {
-  flex: auto;
-  font-size: 28rpx;
-}
-
-.search-cancel {
-  padding: 0 20rpx;
-  font-size: 28rpx;
-}
-
-/*搜索结果*/
-
 .search-result {
   flex: auto;
   position: relative;
@@ -86,8 +50,8 @@ page {
   padding-bottom: 10rpx;
   border-bottom: 1px dotted #666;
   width: 98%;
-   margin-left: 1%;
-}
+  margin-left: 1%;
+  }
 
 .title {
   font-size: 16px;

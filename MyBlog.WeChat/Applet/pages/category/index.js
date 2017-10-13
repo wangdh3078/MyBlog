@@ -1,15 +1,13 @@
-// pages/articleDetails/index.js
-const articleDetailesUrl = require('../../config').articleUrl;
-var WxParse = require('../../wxParse/wxParse.js');
+// pages/category/index.js
 const app = getApp();
+const categoryUrl = require('../../config').categoryUrl;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    article: {},
-    Context: ''
+    category: []
   },
 
   /**
@@ -17,22 +15,27 @@ Page({
    */
   onLoad: function (options) {
     app.showLoading();
+    this.loadData();
+  },
+  loadData: function () {
     var that = this;
     wx.request({
-      url: articleDetailesUrl,
-      data: {
-        id: options.id,
-      },
+      url: categoryUrl,
       success: function (res) {
         that.setData({
-          article: res.data,
-          Context: WxParse.wxParse('Context', 'html', res.data.Context, that, 5)
+          category: res.data
         });
         app.cancelLoading();
+      },
+      fail: function (data) {
+        console.log('请求失败：');
+        console.log(data)
+      },
+      complete: function (data) {
+        console.log('请求完成');
       }
     });
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -65,14 +68,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
   },
 
   /**

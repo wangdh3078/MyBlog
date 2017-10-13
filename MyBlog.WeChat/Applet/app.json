@@ -1,8 +1,30 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/articleDetails/index"
+    "pages/articleDetails/index",
+    "pages/category/index",
+    "pages/categoryArticles/index"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "color": "#ffffff",
+        "selectedColor": "#ff6601",
+        "iconPath": "/pages/resources/images/shouye.png",
+        "selectedIconPath": "/pages/resources/images/shouye_activated.png"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类",
+        "color": "#C1C1C1",
+        "selectedColor": "#FF6601",
+        "iconPath": "/pages/resources/images/fenlei.png",
+        "selectedIconPath": "/pages/resources/images/fenlei_activated.png"
+      }
+    ]
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

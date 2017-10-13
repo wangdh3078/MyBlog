@@ -1,17 +1,20 @@
+var dev=true;
 var host = "wangdahu.top";
 var protocol = "https";
-//var host = "localhost:51484";
-//var protocol="http";
+if (dev){
+  host = "localhost:51484";
+  protocol = "http";
+}
 var config = {
 
   // 下面的地址配合云端 Server 工作
   host,
 
   // 获取文章列表地址
-  articleListUrl: `${protocol}://${host}/api/Article`,
+  articleUrl: `${protocol}://${host}/api/Article`,
 
-  // 文章详情地址
-  articleDetailesUrl: `${protocol}://${host}/api/Article/get`,
+  // 文章分类地址
+  categoryUrl: `${protocol}://${host}/api/Category/get`,
 };
 
 module.exports = config

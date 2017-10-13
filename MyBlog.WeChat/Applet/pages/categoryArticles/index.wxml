@@ -1,11 +1,4 @@
 <view class="search">
-  <view class="search-bar">
-    <view class="search-wrap">
-      <icon type="search" size="16" class="icon-search" />
-      <input type="text" placeholder="请输入搜索内容" class="search-input" name="searchKey" bindinput="bindKeywordInput" value="{{searchKey}}" />
-    </view>
-    <view class="search-cancel" bindtap="keywordSearch">搜索</view>
-  </view>
   <view class="search-result">
     <scroll-view class="container" scroll-y="true" bindscrolltolower="searchScrollLower">
       <view wx:for="{{articles}}" wx:key="*this" class='article' data-id='{{item.Id}}' bindtap="jump">
