@@ -1,5 +1,5 @@
 var dev=false;
-var host = "wangdahu.top";
+var host = "www.wangdahu.top";
 var protocol = "https";
 if (dev){
   host = "localhost:51484";
