@@ -1,4 +1,4 @@
-var dev=true;
+var dev=false;
 var host = "wangdahu.top";
 var protocol = "https";
 if (dev){
