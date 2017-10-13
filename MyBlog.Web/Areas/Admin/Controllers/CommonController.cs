@@ -25,6 +25,7 @@ namespace MyBlog.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult AdminNav()
         {
+            ViewBag.UserName = CurrentUser.LoginName;
             return View();
         }
 

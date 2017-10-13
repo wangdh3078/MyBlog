@@ -43,8 +43,14 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="/Admin/BaseInfoManage" data-index="0">个人资料</a>
+                        <a class="J_menuItem" href="/Admin/BaseInfoManage" >个人资料</a>
                     </li>
+                    @if (ViewBag.UserName == "wangdh")
+                    {
+                        <li>
+                            <a class="J_menuItem" href="/Admin/WeightRecord">体重走势</a>
+                        </li>
+                    }
                 </ul>
             </li>
             <li>

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "体重记录添加";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Scripts/plugins/jquery.validate/validation.css" rel="stylesheet" />
+<div class="container-fluid" style="margin-top:40px;">
+    <form id="addOrEditRecord">
+        <div class="row form-group">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <span>体重(斤)：</span>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                <input type="text" class="form-control" id="weight" name="classfiyName" placeholder="请输入体重" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-xs-offset-5">
+                <input type="button" value="提交" id="btn_submit" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+<script src="~/Content/WeightRecord/add.js"></script>
+

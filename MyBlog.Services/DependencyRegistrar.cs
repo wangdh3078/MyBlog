@@ -27,6 +27,9 @@ namespace MyBlog.Services
 
             //注册分类服务
             builder.RegisterType<ClassifyService>().InstancePerDependency();
+
+            //注册体重服务
+            builder.RegisterType<WeightRecordService>().InstancePerDependency();
         }
     }
 }

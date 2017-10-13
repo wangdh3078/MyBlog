@@ -194,6 +194,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParameterSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagsManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WeightRecordController.cs" />
     <Compile Include="Areas\Admin\Filter\AuthenticationAttribute.cs" />
     <Compile Include="Areas\Admin\Filter\OperationAttribute.cs" />
     <Compile Include="Areas\Admin\Models\BlogViewModel.cs" />
@@ -224,7 +225,10 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\TagsManage\addOrEdit.js" />
     <Content Include="Content\TagsManage\TagsManage.js" />
+    <Content Include="Content\WeightRecord\add.js" />
+    <Content Include="Content\WeightRecord\WeightRecord.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\plugins\Echarts\echarts.common.min.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.js" />
     <Content Include="Scripts\plugins\jquery.validate\jquery.validate.min.js" />
     <Content Include="Scripts\plugins\bootstrap-select-1.12.4\.gitignore" />
@@ -1265,6 +1269,8 @@
     <Content Include="Areas\Admin\Views\Common\CreateSelect.cshtml" />
     <Content Include="Areas\Admin\Views\ClassifiedManage\AddOrEdit.cshtml" />
     <Content Include="Areas\Admin\Views\TagsManage\AddOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\WeightRecord\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\WeightRecord\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\contabs.min.js" />
